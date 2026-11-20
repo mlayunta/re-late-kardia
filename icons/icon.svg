@@ -1,0 +1,84 @@
+<svg xmlns="http://www.w3.org/2000/svg"
+     viewBox="0 0 512 512"
+     role="img"
+     aria-label="Re-Late: corazón, protección y vida">
+
+  <defs>
+    <linearGradient id="background"
+                    x1="0" y1="0"
+                    x2="1" y2="1">
+      <stop offset="0%" stop-color="#0b5363"/>
+      <stop offset="100%" stop-color="#087d72"/>
+    </linearGradient>
+
+    <linearGradient id="heart"
+                    x1="0" y1="0"
+                    x2="0" y2="1">
+      <stop offset="0%" stop-color="#ff8c82"/>
+      <stop offset="100%" stop-color="#eb5757"/>
+    </linearGradient>
+
+    <linearGradient id="leaf"
+                    x1="0" y1="0"
+                    x2="1" y2="1">
+      <stop offset="0%" stop-color="#dcfce7"/>
+      <stop offset="100%" stop-color="#86efac"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Fondo completo para iconos recortables -->
+  <rect width="512"
+        height="512"
+        fill="url(#background)"/>
+
+  <!-- Escudo protector -->
+  <path
+    d="M256 92
+       C304 117 344 124 382 128
+       V230
+       C382 311 331 371 256 414
+       C181 371 130 311 130 230
+       V128
+       C168 124 208 117 256 92Z"
+    fill="#ffffff"
+    fill-opacity="0.10"
+    stroke="#e5fff3"
+    stroke-width="11"
+    stroke-linejoin="round"/>
+
+  <!-- Corazón -->
+  <path
+    d="M256 340
+       C242 329 174 283 174 229
+       C174 199 195 181 220 181
+       C236 181 249 189 256 202
+       C263 189 276 181 292 181
+       C317 181 338 199 338 229
+       C338 283 270 329 256 340Z"
+    fill="url(#heart)"/>
+
+  <!-- Brote: recuperación y hábitos saludables -->
+  <path
+    d="M256 250
+       C256 225 264 207 278 192"
+    fill="none"
+    stroke="#f2fff6"
+    stroke-width="9"
+    stroke-linecap="round"/>
+
+  <path
+    d="M278 193
+       C277 173 290 159 311 157
+       C312 177 301 190 278 193Z"
+    fill="url(#leaf)"/>
+
+  <path
+    d="M254 219
+       C237 219 227 210 225 193
+       C244 193 254 202 254 219Z"
+    fill="#b5f5c7"/>
+
+  <!-- Puntos que sugieren acompañamiento -->
+  <circle cx="170" cy="145" r="5" fill="#b5f5c7"/>
+  <circle cx="342" cy="145" r="5" fill="#b5f5c7"/>
+</svg>

@@ -1,0 +1,2607 @@
+<!DOCTYPE html>
+<!-- Re-Late Kardia · SPDX-License-Identifier: AGPL-3.0-or-later -->
+<!-- © 2026 Miguel Ángel Layunta López y Re-Late · DISEÑO v3.2.0 -->
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#0d6e63">
+<meta name="color-scheme" content="light dark">
+<meta name="description" content="Re-Late Kardia: acompañamiento visual, infografías y registro para personas tras un infarto y sus cuidadores.">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="Kardia">
+<title>Re-Late Kardia</title>
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icons/icon-192.png" sizes="192x192">
+<link rel="apple-touch-icon" href="icons/apple-touch-icon-180.png">
+<style>
+:root{
+  color-scheme:light;
+  --bg:#f6f3ee;--bg-2:#efeae2;--bg-bar:rgba(246,243,238,.9);
+  --surface:#ffffff;--surface-2:#f4f0e9;
+  --line:#e5ded3;--line-2:#d9d0c2;
+  --ink:#16232a;--ink-2:#5d6b70;--ink-3:#8b979b;
+  --brand:#0d6e63;--brand-2:#12897a;--brand-soft:#e2f1ed;
+  --accent:#c96f4a;--accent-soft:#fbeade;
+  --ok:#2f9e6f;--ok-soft:#e3f4ec;
+  --warn:#c98a1e;--warn-soft:#fbf1dd;
+  --danger:#c0392b;--danger-soft:#fbe6e3;
+  --sos:#b3261e;
+  --radio:20px;--radio-s:13px;
+  --s1:0 1px 2px rgba(22,35,42,.04),0 6px 16px rgba(22,35,42,.05);
+  --s2:0 12px 34px rgba(22,35,42,.14);
+  --trans:.2s cubic-bezier(.4,0,.2,1);
+  --font:system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+  --font-display:Georgia,"Iowan Old Style","Palatino Linotype",Palatino,serif;
+}
+[data-tema="noche"]{
+  color-scheme:dark;
+  --bg:#0e1418;--bg-2:#131c21;--bg-bar:rgba(14,20,24,.9);
+  --surface:#18232a;--surface-2:#1e2b33;
+  --line:#28383f;--line-2:#33454d;
+  --ink:#eaf1f0;--ink-2:#9aacb1;--ink-3:#7b8d92;
+  --brand:#3fc7b0;--brand-2:#63d8c3;--brand-soft:#123a34;
+  --accent:#ff9d78;--accent-soft:#3a241c;
+  --ok:#4ad6a0;--ok-soft:#123328;
+  --warn:#e8b64a;--warn-soft:#332a12;
+  --danger:#f27d70;--danger-soft:#3a1e1a;
+  --s1:0 1px 2px rgba(0,0,0,.3),0 6px 16px rgba(0,0,0,.25);
+  --s2:0 12px 34px rgba(0,0,0,.5);
+}
+*,*::before,*::after{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%;font-size:100%}
+body{margin:0;font-family:var(--font);background:var(--bg);color:var(--ink);line-height:1.55;
+  -webkit-font-smoothing:antialiased;padding-bottom:calc(86px + env(safe-area-inset-bottom))}
+@media(min-width:1000px){body{padding-bottom:0}}
+h1,h2,h3,p{margin:0}
+h2{font-size:1.15rem;font-weight:700;letter-spacing:-.02em;line-height:1.25}
+h3{font-size:1rem;font-weight:700}
+a{color:var(--brand);font-weight:600;text-decoration:none}
+a:hover{text-decoration:underline}
+img{max-width:100%}
+.sr-only{position:absolute!important;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;
+  clip:rect(0 0 0 0);clip-path:inset(50%);white-space:nowrap;border:0}
+.salto{position:absolute;left:.5rem;top:-4rem;z-index:200;background:var(--surface);color:var(--ink);
+  border:2px solid var(--brand);border-radius:12px;padding:.6rem .9rem;font-weight:700;transition:top var(--trans)}
+.salto:focus{top:.5rem}
+@media(max-width:999px){.solo-escritorio{display:none!important}.acciones-rapidas{display:none}}
+@media(min-width:1000px){.solo-movil{display:none!important}}
+.app{min-height:100vh}
+@media(min-width:1000px){.app{display:grid;grid-template-columns:268px minmax(0,1fr)}}
+.sidebar{display:none}
+@media(min-width:1000px){
+  .sidebar{display:flex;flex-direction:column;gap:1.1rem;position:sticky;top:0;height:100vh;
+    padding:1.4rem 1rem;background:var(--surface);border-right:1px solid var(--line)}
+}
+.marca{display:flex;align-items:center;gap:.6rem;font-weight:800;font-size:1rem;letter-spacing:-.02em;color:var(--ink)}
+.marca svg{width:36px;height:36px;border-radius:11px;flex:0 0 36px;box-shadow:var(--s1)}
+.nav-lateral{display:flex;flex-direction:column;gap:.15rem;overflow-y:auto;margin:0 -.3rem;padding:0 .3rem}
+.nav-lateral button{display:flex;align-items:center;gap:.7rem;width:100%;text-align:left;background:transparent;
+  border:0;border-radius:13px;padding:.6rem .7rem;font-size:.92rem;font-weight:600;color:var(--ink-2);
+  cursor:pointer;transition:all var(--trans)}
+.nav-lateral button:hover{background:var(--surface-2);color:var(--ink)}
+.nav-lateral button[aria-current="true"]{background:var(--brand-soft);color:var(--brand);font-weight:700}
+.nav-lateral svg{width:20px;height:20px;flex:0 0 20px}
+.sidebar-pie{margin-top:auto;font-size:.72rem;color:var(--ink-3);line-height:1.5;border-top:1px solid var(--line);padding-top:.9rem}
+.topbar{position:sticky;top:0;z-index:40;display:flex;align-items:center;justify-content:space-between;
+  gap:1rem;padding:.7rem 1rem;background:var(--bg-bar);backdrop-filter:saturate(180%) blur(14px);
+  border-bottom:1px solid var(--line)}
+.topbar-titulo{display:none;font-weight:700;font-size:.95rem;color:var(--ink-2)}
+@media(min-width:1000px){.topbar-titulo{display:block}}
+.topbar-acciones{display:flex;gap:.4rem;align-items:center}
+.btn-icono{background:var(--surface-2);border:1px solid var(--line);color:var(--ink);font-size:1rem;
+  border-radius:50%;width:44px;height:44px;cursor:pointer;display:grid;place-items:center;
+  transition:all var(--trans);flex:0 0 44px}
+.btn-icono:hover{background:var(--brand-soft);border-color:var(--brand);color:var(--brand)}
+.nav-inferior{position:fixed;left:0;right:0;bottom:0;z-index:50;display:flex;justify-content:space-around;
+  align-items:stretch;gap:.1rem;padding:.35rem .35rem calc(.35rem + env(safe-area-inset-bottom));
+  background:var(--bg-bar);backdrop-filter:saturate(180%) blur(14px);border-top:1px solid var(--line)}
+@media(min-width:1000px){.nav-inferior{display:none}}
+.nav-inferior button{flex:1 1 0;display:flex;flex-direction:column;align-items:center;justify-content:center;
+  gap:.12rem;background:transparent;border:0;border-radius:14px;padding:.4rem .15rem;font-size:.67rem;
+  font-weight:700;color:var(--ink-3);cursor:pointer;transition:all var(--trans);min-height:56px}
+.nav-inferior button svg{width:23px;height:23px}
+.nav-inferior button[aria-current="true"]{color:var(--brand);background:var(--brand-soft)}
+.hoja-fondo{position:fixed;inset:0;background:rgba(10,18,22,.5);z-index:60;animation:fundido .2s ease}
+.hoja{position:fixed;left:0;right:0;bottom:0;z-index:61;background:var(--surface);
+  border-radius:24px 24px 0 0;padding:1.1rem 1.1rem calc(1.4rem + env(safe-area-inset-bottom));
+  box-shadow:var(--s2);animation:subir .26s cubic-bezier(.2,.8,.3,1);max-height:86vh;overflow-y:auto}
+@media(min-width:1000px){
+  .hoja{left:50%;right:auto;bottom:auto;top:50%;transform:translate(-50%,-50%);border-radius:24px;
+    width:min(560px,92vw);animation:aparecer .2s ease}
+}
+@keyframes subir{from{transform:translateY(100%)}to{transform:translateY(0)}}
+@keyframes fundido{from{opacity:0}to{opacity:1}}
+.hoja-cab{display:flex;align-items:center;justify-content:space-between;gap:1rem}
+.hoja-rejilla{display:grid;grid-template-columns:repeat(auto-fit,minmax(145px,1fr));gap:.6rem;margin-top:.9rem}
+.hoja-item{display:flex;flex-direction:column;gap:.35rem;align-items:flex-start;background:var(--surface-2);
+  border:1px solid var(--line);border-radius:16px;padding:.85rem;cursor:pointer;text-align:left;
+  font-weight:700;font-size:.9rem;color:var(--ink);transition:all var(--trans);min-height:92px}
+.hoja-item:hover{border-color:var(--brand);transform:translateY(-1px)}
+.hoja-item svg{width:24px;height:24px;color:var(--brand)}
+.hoja-item small{font-weight:500;font-size:.75rem;color:var(--ink-2);line-height:1.35}
+.contenido{min-width:0}
+main{padding:1rem;max-width:64rem;margin:0 auto}
+.vista{display:none}
+.vista.activo{display:block;animation:aparecer .28s ease}
+@keyframes aparecer{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+.hero{position:relative;overflow:hidden;border-radius:24px;padding:1.25rem 1.3rem 1.35rem;
+  background:linear-gradient(135deg,#0b5a52 0%,#12897a 62%,#1fa48f 100%);color:#fff;
+  box-shadow:var(--s2);margin-bottom:1rem;display:flex;align-items:center;justify-content:space-between;gap:1rem}
+[data-tema="noche"] .hero{background:linear-gradient(135deg,#0a3d38 0%,#0f5f57 62%,#12796b 100%)}
+.hero::after{content:"";position:absolute;right:-70px;top:-80px;width:230px;height:230px;border-radius:50%;
+  background:radial-gradient(circle,rgba(255,255,255,.16),transparent 70%)}
+.hero-texto{position:relative;z-index:1;min-width:0}
+.hero-fecha{margin:0 0 .15rem;font-size:.74rem;font-weight:700;letter-spacing:.06em;
+  text-transform:uppercase;color:rgba(255,255,255,.82)}
+.hero-saludo{margin:0 0 .3rem;font-family:var(--font-display);font-size:1.55rem;font-weight:700;
+  letter-spacing:-.01em;line-height:1.15}
+.hero-frase{margin:0;font-size:.84rem;color:rgba(255,255,255,.9);max-width:26rem}
+.anillo{position:relative;z-index:1;width:92px;height:92px;flex:0 0 92px}
+.anillo svg{width:100%;height:100%;transform:rotate(-90deg)}
+.anillo circle{fill:none;stroke-width:9;stroke-linecap:round}
+.anillo-fondo{stroke:rgba(255,255,255,.22)}
+.anillo-valor{stroke:#fff;stroke-dasharray:326.73;stroke-dashoffset:326.73;
+  transition:stroke-dashoffset .7s cubic-bezier(.4,0,.2,1)}
+.anillo-texto{position:absolute;inset:0;display:grid;place-items:center;font-weight:800;font-size:1.05rem;
+  letter-spacing:-.03em;font-variant-numeric:tabular-nums}
+.acciones-rapidas{display:grid;grid-template-columns:repeat(4,1fr);gap:.55rem;margin-bottom:1rem}
+.accion{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.35rem;
+  background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:.7rem .35rem;
+  cursor:pointer;font-size:.71rem;font-weight:700;color:var(--ink-2);transition:all var(--trans);min-height:78px}
+.accion svg{width:22px;height:22px;color:var(--brand)}
+.accion:hover{border-color:var(--brand);color:var(--ink);transform:translateY(-2px);box-shadow:var(--s1)}
+.tarjeta{background:var(--surface);border:1px solid var(--line);border-radius:var(--radio);
+  padding:1.15rem;margin-bottom:1rem;box-shadow:var(--s1)}
+.tarjeta-cab{margin-bottom:.85rem}
+.etiqueta{margin:0 0 .15rem;font-size:.69rem;font-weight:800;letter-spacing:.09em;
+  text-transform:uppercase;color:var(--brand)}
+.rejilla{display:grid;gap:1rem;grid-template-columns:repeat(auto-fit,minmax(15rem,1fr))}
+.datos{display:grid;gap:.6rem;grid-template-columns:repeat(auto-fit,minmax(6.5rem,1fr));margin-top:.5rem}
+.dato{background:var(--surface-2);border-radius:14px;padding:.75rem .6rem;text-align:center}
+.dato b{display:block;font-size:1.25rem;font-weight:800;letter-spacing:-.03em;font-variant-numeric:tabular-nums}
+.dato span{font-size:.67rem;text-transform:uppercase;letter-spacing:.06em;color:var(--ink-2);font-weight:600}
+label{display:block;font-size:.82rem;font-weight:700;margin:.85rem 0 .3rem;color:var(--ink-2)}
+input,select,textarea,button{font:inherit;color:inherit}
+input,select,textarea{width:100%;padding:.68rem .8rem;border:1.5px solid var(--line-2);
+  border-radius:13px;background:var(--surface-2);
+  transition:border-color var(--trans),box-shadow var(--trans),background var(--trans)}
+input:focus,select:focus,textarea:focus{outline:none;border-color:var(--brand);background:var(--surface);
+  box-shadow:0 0 0 4px var(--brand-soft)}
+button.principal{width:100%;background:linear-gradient(135deg,var(--brand),var(--brand-2));color:#fff;
+  border:0;border-radius:14px;padding:.85rem 1rem;cursor:pointer;font-weight:700;margin-top:1.1rem;
+  box-shadow:0 6px 16px rgba(13,110,99,.26);transition:all var(--trans)}
+button.principal:hover{transform:translateY(-1px);box-shadow:0 8px 22px rgba(13,110,99,.34)}
+button.secundario{background:var(--surface-2);border:1.5px solid var(--line-2);border-radius:13px;
+  padding:.62rem .95rem;cursor:pointer;font-weight:600;margin-top:.6rem;color:var(--ink);transition:all var(--trans)}
+button.secundario:hover{border-color:var(--brand);color:var(--brand)}
+.acciones-inline{display:flex;flex-wrap:wrap;gap:.5rem;margin-top:.7rem}
+.acciones-inline button{width:auto;margin-top:0}
+.btn-sos{width:100%;background:linear-gradient(135deg,#c0392b,#9b2318);color:#fff;border:0;
+  border-radius:var(--radio);padding:1.15rem;font-size:1.08rem;font-weight:800;cursor:pointer;
+  margin-top:.6rem;letter-spacing:.01em;box-shadow:0 8px 22px rgba(192,57,43,.3);
+  display:flex;align-items:center;justify-content:center;gap:.6rem;transition:all var(--trans)}
+.btn-sos:hover{transform:translateY(-1px);box-shadow:0 10px 28px rgba(192,57,43,.4)}
+.infografia-caja{background:var(--surface-2);border-radius:18px;padding:1rem;margin:.7rem 0;border:1px solid var(--line)}
+.plato-grid{display:grid;grid-template-columns:1fr 1.15fr;gap:1rem;align-items:center}
+@media(max-width:600px){.plato-grid{grid-template-columns:1fr}}
+.plato-svg{max-width:230px;margin:0 auto;display:block;cursor:pointer}
+.plato-svg path,.plato-svg circle{transition:opacity .2s}
+.plato-svg path:hover{opacity:.88}
+.leyenda-plato{display:grid;gap:.45rem}
+.leyenda-item{display:flex;align-items:flex-start;gap:.55rem;padding:.6rem .75rem;border-radius:14px;
+  background:var(--surface);border:1px solid var(--line);cursor:pointer;text-align:left;width:100%;
+  color:var(--ink);transition:all var(--trans)}
+.leyenda-item.activo{border-color:var(--brand);box-shadow:0 0 0 3px var(--brand-soft)}
+.color-chip{width:14px;height:14px;border-radius:5px;flex:0 0 14px;margin-top:3px}
+.fases-rehab{display:grid;grid-template-columns:repeat(auto-fit,minmax(13.5rem,1fr));gap:.65rem;margin:.75rem 0}
+.fase-card{background:var(--surface-2);border-radius:16px;padding:.9rem;border-top:4px solid var(--brand)}
+.fase-card.f2{border-top-color:var(--warn)}
+.fase-card.f3{border-top-color:#3b82c4}
+.fase-card.f4{border-top-color:var(--danger)}
+.fase-card.f5{border-top-color:#6366f1}
+.borg-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(8.5rem,1fr));gap:.45rem;margin:.6rem 0}
+.borg-btn{background:var(--surface-2);border:1.5px solid var(--line-2);border-radius:14px;padding:.6rem;
+  text-align:left;cursor:pointer;color:var(--ink);transition:all var(--trans)}
+.borg-btn.sel{border-color:var(--brand);background:var(--brand-soft)}
+.borg-btn strong{display:block;font-size:.88rem}
+.borg-btn span{font-size:.75rem;color:var(--ink-2)}
+.segmento{display:flex;gap:.3rem;background:var(--surface-2);padding:.32rem;border-radius:15px;
+  margin:.3rem 0 .95rem;flex-wrap:wrap}
+.segmento button{flex:1 1 auto;border:0;background:transparent;padding:.55rem .7rem;border-radius:12px;
+  cursor:pointer;font-size:.85rem;font-weight:700;color:var(--ink-2);transition:all var(--trans)}
+.segmento button.activo{background:var(--surface);color:var(--brand);box-shadow:var(--s1)}
+.tabla-scroll{overflow-x:auto;-webkit-overflow-scrolling:touch}
+table{width:100%;border-collapse:collapse;font-size:.86rem;margin-top:.5rem}
+th,td{text-align:left;padding:.55rem .55rem;border-bottom:1px solid var(--line);white-space:nowrap}
+th{font-size:.71rem;text-transform:uppercase;letter-spacing:.05em;color:var(--ink-2);font-weight:800}
+.badge{display:inline-block;font-size:.71rem;font-weight:800;padding:.22rem .62rem;border-radius:999px}
+.b-ok{background:var(--ok-soft);color:#0f6b5c}
+.b-fuera{background:var(--danger-soft);color:#a83325}
+[data-tema="noche"] .b-ok{color:#4ad6a0}
+[data-tema="noche"] .b-fuera{color:#f27d70}
+.barra{height:10px;background:var(--surface-2);border-radius:999px;overflow:hidden;margin:.5rem 0}
+.barra i{display:block;height:100%;border-radius:999px;
+  background:linear-gradient(90deg,var(--brand),var(--brand-2));transition:width .55s ease}
+.punto{display:inline-block;width:.72rem;height:.72rem;border-radius:50%;margin-right:.45rem;vertical-align:middle}
+.verde{background:#2f9e6f}.ambar{background:#d99b2b}.rojo{background:#cb3a2b}
+.aviso{background:var(--warn-soft);border:1.5px solid var(--warn);border-radius:16px;
+  padding:.8rem 1rem;margin-bottom:1rem;font-weight:600;font-size:.9rem}
+.semaforo-box{border-left:6px solid var(--brand);padding:.9rem 1rem;background:var(--surface-2);
+  border-radius:14px;margin:.6rem 0}
+.semaforo-box.verde{border-color:#2f9e6f}
+.semaforo-box.ambar{border-color:#d99b2b}
+.semaforo-box.rojo{border-color:#cb3a2b}
+.nota{font-size:.81rem;color:var(--ink-2);line-height:1.5}
+ul.lista{list-style:none;padding:0;margin:.5rem 0}
+ul.lista li{background:var(--surface-2);border-radius:14px;padding:.7rem .9rem;margin-bottom:.5rem;
+  display:flex;justify-content:space-between;gap:.6rem;align-items:center}
+ul.enlaces-oficiales li{display:block}
+ul.enlaces-oficiales a{display:block;overflow-wrap:anywhere}
+.check-item{display:flex;align-items:center;justify-content:space-between;gap:.7rem;padding:.7rem 0;
+  border-bottom:1px solid var(--line)}
+.check-item:last-child{border-bottom:0}
+.check-item span{font-size:.92rem;font-weight:600}
+.pasos{padding-left:1.2rem;margin:.4rem 0}
+.pasos li{margin:.45rem 0}
+canvas{width:100%;height:auto;max-width:100%;display:block}
+.toast{position:fixed;left:50%;bottom:calc(96px + env(safe-area-inset-bottom));transform:translate(-50%,1.5rem);
+  z-index:200;background:var(--ink);color:var(--bg);padding:.8rem 1.15rem;border-radius:14px;font-weight:600;
+  font-size:.9rem;box-shadow:var(--s2);opacity:0;pointer-events:none;
+  transition:opacity var(--trans),transform var(--trans);max-width:min(90vw,32rem);text-align:center}
+@media(min-width:1000px){.toast{bottom:1.4rem}}
+.toast.visible{opacity:1;transform:translate(-50%,0)}
+/* Botones pequeños de acción en listas */
+.btn-mini{background:transparent;border:1px solid var(--line-2);border-radius:10px;padding:.32rem .5rem;
+  cursor:pointer;font-size:.85rem;line-height:1;color:var(--ink-2);min-height:auto;transition:all var(--trans)}
+.btn-mini:hover{border-color:var(--danger);color:var(--danger)}
+.btn-mini.editar:hover{border-color:var(--brand);color:var(--brand)}
+.acciones-item{display:flex;gap:.35rem;align-items:center;flex:0 0 auto}
+/* Adherencia de los últimos 7 días */
+.adherencia{display:flex;gap:.35rem;align-items:flex-end;height:74px;margin:.7rem 0 .3rem}
+.adherencia .dia{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;gap:.25rem;height:100%}
+.adherencia .barra-dia{width:100%;border-radius:6px 6px 0 0;min-height:4px;
+  background:linear-gradient(180deg,var(--brand-2),var(--brand))}
+.adherencia .dia span{font-size:.62rem;color:var(--ink-3);font-weight:800}
+/* Bloqueo con PIN */
+.bloqueo{position:fixed;inset:0;z-index:500;background:var(--bg);display:grid;place-items:center;padding:1.5rem}
+.bloqueo[hidden]{display:none}
+.bloqueo-caja{background:var(--surface);border:1px solid var(--line);border-radius:24px;padding:1.6rem;
+  max-width:21rem;width:100%;text-align:center;box-shadow:var(--s2)}
+.bloqueo-caja>svg{width:50px;height:50px;color:var(--brand);margin-bottom:.5rem}
+.pin-puntos{display:flex;gap:.6rem;justify-content:center;margin:1rem 0}
+.pin-punto{width:14px;height:14px;border-radius:50%;background:var(--line-2);transition:background var(--trans)}
+.pin-punto.lleno{background:var(--brand)}
+.pin-teclado{display:grid;grid-template-columns:repeat(3,1fr);gap:.5rem;margin-top:.8rem}
+.pin-teclado button{background:var(--surface-2);border:1px solid var(--line);border-radius:14px;
+  padding:.85rem;font-size:1.15rem;font-weight:700;cursor:pointer;color:var(--ink);transition:all var(--trans)}
+.pin-teclado button:hover{border-color:var(--brand);color:var(--brand)}
+/* Botón SOS flotante */
+.sos-flotante{position:fixed;right:1rem;bottom:calc(96px + env(safe-area-inset-bottom));z-index:45;
+  width:58px;height:58px;border-radius:50%;border:0;cursor:pointer;
+  background:linear-gradient(135deg,#c0392b,#9b2318);color:#fff;font-size:1.5rem;
+  box-shadow:0 8px 22px rgba(192,57,43,.42);display:grid;place-items:center;
+  transition:transform var(--trans),box-shadow var(--trans)}
+.sos-flotante:hover{transform:scale(1.06)}
+.sos-flotante[hidden]{display:none}
+@media(min-width:1000px){.sos-flotante{bottom:1.5rem}}
+/* Informe imprimible */
+#informeImpresion{display:none}
+@media print{
+  .sidebar,.topbar,.nav-inferior,.hoja,.hoja-fondo,.bloqueo,.btn-sos,.sos-flotante,
+  button,.salto,.toast,.vista{display:none!important}
+  #informeImpresion{display:block!important}
+  body{background:#fff;color:#000;padding-bottom:0}
+  main{padding:0;max-width:none}
+  .inf-cab{border-bottom:2px solid #0d6e63;padding-bottom:.6rem;margin-bottom:1rem}
+  .inf-cab h1{font-size:1.25rem;margin-bottom:.3rem}
+  .inf-tabla{width:100%;border-collapse:collapse;font-size:.8rem;margin:.5rem 0 1rem}
+  .inf-tabla th,.inf-tabla td{border:1px solid #bbb;padding:.3rem .4rem;text-align:left;white-space:normal}
+  .inf-tabla th{background:#eef5f3}
+  .inf-bloque{break-inside:avoid;margin-bottom:1rem}
+  .inf-bloque h2{font-size:1rem;margin-bottom:.3rem}
+  .inf-bloque ul{margin:.3rem 0;padding-left:1.1rem}
+}
+input:not([type="checkbox"]):not([type="radio"]),select,textarea{min-height:48px}
+button{min-height:44px}
+button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible{
+  outline:3px solid var(--brand);outline-offset:3px}
+@media (prefers-reduced-motion: reduce){
+  *,*::before,*::after{scroll-behavior:auto!important;animation:none!important;transition:none!important}
+}
+/* Franja de imagen de cada sección */
+.banner-vista{position:relative;height:110px;border-radius:var(--radio);background-size:cover;
+  background-position:center;background-color:var(--surface-2);margin-bottom:1rem;
+  box-shadow:var(--s1);overflow:hidden}
+.banner-vista::after{content:"";position:absolute;inset:0;
+  background:linear-gradient(180deg,rgba(0,0,0,0) 45%,rgba(0,0,0,.4))}
+.btn-cambiar-banner{position:absolute;right:.6rem;bottom:.6rem;z-index:2;
+  background:rgba(255,255,255,.94);color:#16232a;border:0;border-radius:999px;
+  padding:.42rem .8rem;font-size:.75rem;font-weight:700;cursor:pointer;min-height:auto;
+  box-shadow:0 2px 8px rgba(0,0,0,.2);transition:all var(--trans)}
+.btn-cambiar-banner:hover{background:#fff;transform:translateY(-1px)}
+@media(max-width:600px){.banner-vista{height:92px}}
+
+</style>
+</head>
+<body>
+<h1 class="sr-only">Re-Late Kardia</h1>
+<a class="salto" href="#contenido">Saltar al contenido principal</a>
+<noscript>
+  <p style="margin:1rem;padding:1rem;border:2px solid #c0392b;border-radius:14px;background:#fff;color:#1b1a19">
+    Re-Late Kardia necesita JavaScript activado para funcionar. Actívalo en tu navegador y vuelve a cargar la página.
+  </p>
+</noscript>
+
+<div class="app">
+
+  <!-- Barra lateral (escritorio) -->
+  <aside class="sidebar" aria-label="Menú principal">
+    <div class="marca">
+      <svg viewBox="0 0 120 120" aria-hidden="true" focusable="false">
+        <defs>
+          <linearGradient id="logoBg" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0%" stop-color="#0b4f5c"/>
+            <stop offset="100%" stop-color="#0d6e66"/>
+          </linearGradient>
+        </defs>
+        <rect width="120" height="120" rx="22" fill="url(#logoBg)"/>
+        <path d="M60 22 L92 31 L92 58 C92 79 77 93 60 100 C43 93 28 79 28 58 L28 31 Z" fill="rgba(255,255,255,0.12)" stroke="#e6fff7" stroke-width="4" stroke-linejoin="round"/>
+        <circle cx="40" cy="39" r="2.5" fill="#bbf7d0"/>
+        <circle cx="80" cy="39" r="2.5" fill="#bbf7d0"/>
+        <path d="M60 80 C44 68 39 55 47 47 C53 41 59 45 60 50 C61 45 67 41 73 47 C81 55 76 68 60 80 Z" fill="#f87171"/>
+        <path d="M60 58 Q61 48 66 44" fill="none" stroke="#fff" stroke-width="3.2" stroke-linecap="round"/>
+        <ellipse cx="70" cy="41" rx="6" ry="3.2" transform="rotate(-35 70 41)" fill="#bbf7d0"/>
+        <ellipse cx="55" cy="48" rx="4.5" ry="2.5" transform="rotate(28 55 48)" fill="#bbf7d0"/>
+      </svg>
+      Re-Late Kardia
+    </div>
+    <nav class="nav-lateral" id="navLateral" aria-label="Secciones"></nav>
+    <div class="sidebar-pie">
+      <p>Tus datos se guardan solo en este dispositivo.</p>
+      <p style="margin-top:.4rem" id="versionLateral"></p>
+    </div>
+  </aside>
+
+  <div class="contenido">
+
+    <!-- Barra superior -->
+    <header class="topbar">
+      <div class="marca solo-movil" style="font-size:.95rem">
+        <svg viewBox="0 0 120 120" aria-hidden="true" focusable="false" style="width:32px;height:32px">
+          <rect width="120" height="120" rx="22" fill="#0d6e66"/>
+          <path d="M60 22 L92 31 L92 58 C92 79 77 93 60 100 C43 93 28 79 28 58 L28 31 Z" fill="rgba(255,255,255,0.12)" stroke="#e6fff7" stroke-width="4" stroke-linejoin="round"/>
+          <path d="M60 80 C44 68 39 55 47 47 C53 41 59 45 60 50 C61 45 67 41 73 47 C81 55 76 68 60 80 Z" fill="#f87171"/>
+          <path d="M60 58 Q61 48 66 44" fill="none" stroke="#fff" stroke-width="3.2" stroke-linecap="round"/>
+        </svg>
+        Kardia
+      </div>
+      <p class="topbar-titulo" id="tituloSeccion">Inicio</p>
+      <div class="topbar-acciones">
+        <button type="button" class="btn-icono solo-movil" id="btnMas" aria-label="Más secciones" aria-expanded="false">⋯</button>
+        <button type="button" class="btn-icono" data-accion="informe" aria-label="Imprimir informe médico">🖨️</button>
+        <button type="button" class="btn-icono" data-accion="tema" aria-label="Cambiar modo día o noche">🌙</button>
+      </div>
+    </header>
+
+    <main id="contenido" tabindex="-1">
+
+      <!-- INICIO -->
+      <section id="vista-inicio" class="vista activo" aria-label="Inicio">
+        <div class="hero">
+          <div class="hero-texto">
+            <p class="hero-fecha" id="fechaHoy"></p>
+            <h2 class="hero-saludo" id="saludo">Hola</h2>
+            <p class="hero-frase" id="fraseProgreso"></p>
+          </div>
+          <div class="anillo" id="anilloProgreso" role="img" aria-label="Progreso del día">
+            <svg viewBox="0 0 120 120" aria-hidden="true" focusable="false">
+              <circle class="anillo-fondo" cx="60" cy="60" r="52"/>
+              <circle class="anillo-valor" id="anilloValor" cx="60" cy="60" r="52"/>
+            </svg>
+            <span class="anillo-texto" id="anilloTexto">0%</span>
+          </div>
+        </div>
+
+        <div class="aviso" id="avisoRecordatorio" role="status" aria-live="polite" hidden></div>
+
+        <div class="acciones-rapidas">
+          <button type="button" class="accion" data-ir="constantes">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2.6 12.4h3.6l2.2-5.6 3.4 11 2.6-7.4 1.6 2h5.4"/></svg>
+            Constantes
+          </button>
+          <button type="button" class="accion" data-ir="actividad">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="13.4" cy="4.4" r="1.9"/><path d="M13.6 7.6 11 12.2l2.6 2.4.6 6"/><path d="M11 12.2 7.4 15l-.8 5.6"/><path d="M14.6 9.4 18 10.8"/></svg>
+            Actividad
+          </button>
+          <button type="button" class="accion" data-ir="emociones">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 20.2s-7.2-4.5-7.2-9.7A4.1 4.1 0 0 1 12 7.2a4.1 4.1 0 0 1 7.2 3.3c0 5.2-7.2 9.7-7.2 9.7z"/></svg>
+            Ánimo
+          </button>
+          <button type="button" class="accion" data-ir="medicacion">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><g transform="rotate(-45 12 12)"><rect x="2.8" y="8.2" width="18.4" height="7.6" rx="3.8"/><path d="M12 8.2v7.6"/></g></svg>
+            Medicación
+          </button>
+        </div>
+
+        <article class="tarjeta">
+          <div class="tarjeta-cab">
+            <p class="etiqueta">Tu día</p>
+            <h2>Paso a paso</h2>
+          </div>
+          <div class="barra"><i id="barraProgresoDia" style="width:0%"></i></div>
+          <div id="listaObjetivosDia"></div>
+        </article>
+
+        <div class="rejilla">
+          <article class="tarjeta">
+            <div class="tarjeta-cab"><p class="etiqueta">Hoy</p><h2>💊 Tomas</h2></div>
+            <div id="resumenTomas"></div>
+            <div class="barra"><i id="barraTomas" style="width:0%"></i></div>
+          </article>
+          <article class="tarjeta">
+            <div class="tarjeta-cab"><p class="etiqueta">Reciente</p><h2>🩺 Última constante</h2></div>
+            <div id="resumenConstantes"></div>
+          </article>
+          <article class="tarjeta">
+            <div class="tarjeta-cab"><p class="etiqueta">Agenda</p><h2>📅 Próxima revisión</h2></div>
+            <div id="proximaRevision"></div>
+          </article>
+        </div>
+
+        <article class="tarjeta">
+          <div class="tarjeta-cab"><p class="etiqueta">Últimos 7 días</p><h2>📊 Adherencia a la medicación</h2></div>
+          <div id="panelAdherencia"></div>
+        </article>
+
+        <button type="button" class="btn-sos" id="btnSosRapido">🆘 Necesito ayuda urgente</button>
+      </section>
+
+      <!-- MEDICACIÓN -->
+      <section id="vista-medicacion" class="vista" aria-label="Medicación">
+        <article class="tarjeta">
+          <div class="tarjeta-cab">
+            <p class="etiqueta">Tratamiento</p>
+            <h2>💊 Añadir medicación</h2>
+          </div>
+          <form id="formMed">
+            <label for="medNombre">Nombre</label>
+            <input id="medNombre" required autocomplete="off" placeholder="Ej.: Adiro 100 mg">
+            <label for="medDosis">Dosis</label>
+            <input id="medDosis" autocomplete="off" placeholder="Ej.: 1 comprimido">
+            <label for="medHoras">Horas (separadas por coma)</label>
+            <input id="medHoras" autocomplete="off" inputmode="numeric" placeholder="08:00, 20:00">
+            <label for="medPauta">Pauta o indicaciones</label>
+            <input id="medPauta" autocomplete="off" placeholder="Con el desayuno">
+            <label for="medFoto">Foto de la caja (opcional)</label>
+            <input id="medFoto" type="file" accept="image/*">
+            <button class="principal" type="submit" id="btnGuardarMed">Guardar medicación</button>
+            <button type="button" class="secundario" id="btnCancelarMed" hidden>Cancelar edición</button>
+          </form>
+        </article>
+        <article class="tarjeta">
+          <div class="tarjeta-cab"><p class="etiqueta">Adherencia</p><h2>📋 Mi medicación</h2></div>
+          <ul class="lista" id="listaMed"></ul>
+        </article>
+      </section>
+
+      <!-- CONSTANTES -->
+      <section id="vista-constantes" class="vista" aria-label="Constantes">
+        <article class="tarjeta">
+          <div class="tarjeta-cab">
+            <p class="etiqueta">Registro</p>
+            <h2>🩺 Registrar constantes</h2>
+          </div>
+          <form id="formConst">
+            <label for="cSistolica">Tensión sistólica (alta)</label>
+            <input id="cSistolica" type="number" inputmode="numeric" required placeholder="120">
+            <label for="cDiastolica">Tensión diastólica (baja)</label>
+            <input id="cDiastolica" type="number" inputmode="numeric" required placeholder="80">
+            <label for="cPulso">Pulso (lpm)</label>
+            <input id="cPulso" type="number" inputmode="numeric" placeholder="70">
+            <label for="cPeso">Peso (kg)</label>
+            <input id="cPeso" type="number" inputmode="decimal" step="0.1" placeholder="78.5">
+            <label for="cCintura">Perímetro abdominal (cm, opcional)</label>
+            <input id="cCintura" type="number" inputmode="decimal" step="0.1" placeholder="92">
+            <label for="cGlucemia">Glucemia en ayunas (mg/dL)</label>
+            <input id="cGlucemia" type="number" inputmode="numeric" placeholder="95">
+            <label for="cColTotal">Colesterol total (mg/dL)</label>
+            <input id="cColTotal" type="number" inputmode="numeric" placeholder="185">
+            <label for="cColLDL">Colesterol LDL (mg/dL)</label>
+            <input id="cColLDL" type="number" inputmode="numeric" placeholder="70">
+            <label for="cNotas">Notas</label>
+            <input id="cNotas" placeholder="En reposo, antes del desayuno">
+            <button class="principal" type="submit" id="btnGuardarConst">Guardar registro</button>
+            <button type="button" class="secundario" id="btnCancelarConst" hidden>Cancelar edición</button>
+          </form>
+        </article>
+
+        <article class="tarjeta">
+          <div class="tarjeta-cab">
+            <p class="etiqueta">Orientación</p>
+            <h2>🚦 Lectura de tus últimos datos</h2>
+          </div>
+          <div id="panelSemaforo"></div>
+          <div id="panelIndices"></div>
+          <p class="nota" style="margin-top:.7rem">Este resumen no diagnostica ni sustituye el criterio médico. Tus objetivos personales acordados tienen prioridad.</p>
+        </article>
+
+        <article class="tarjeta">
+          <div class="tarjeta-cab">
+            <p class="etiqueta">Tendencia</p>
+            <h2>📈 Evolución gráfica</h2>
+          </div>
+          <div class="segmento" id="segmentoMetrica" role="group" aria-label="Elegir métrica de la gráfica">
+            <button type="button" class="activo" data-metrica="tension" aria-pressed="true">Tensión</button>
+            <button type="button" data-metrica="glucemia" aria-pressed="false">Glucemia</button>
+            <button type="button" data-metrica="colesterol" aria-pressed="false">Colesterol</button>
+            <button type="button" data-metrica="peso" aria-pressed="false">Peso</button>
+          </div>
+          <canvas id="graficaSeguimiento" width="720" height="280" role="img" aria-label="Gráfica de evolución de tus constantes">Tu navegador no permite mostrar la gráfica. Consulta la tabla de historial que aparece más abajo.</canvas>
+          <div class="datos" id="estadisticasSeguimiento"></div>
+        </article>
+
+        <article class="tarjeta">
+          <div class="tarjeta-cab"><p class="etiqueta">Archivo</p><h2>🗂️ Historial</h2></div>
+          <div class="tabla-scroll"><table id="tablaConst" aria-label="Historial de constantes registradas"></table></div>
+        </article>
+
+        <article class="tarjeta">
+          <div class="tarjeta-cab"><p class="etiqueta">Referencia</p><h2>📊 Tablas orientativas</h2></div>
+          <div id="tablaOrientativa"></div>
+        </article>
+      </section>
+      <!-- ACTIVIDAD -->
+      <section id="vista-actividad" class="vista" aria-label="Actividad">
+        <article class="tarjeta">
+          <div class="tarjeta-cab">
+            <p class="etiqueta">Seguridad</p>
+            <h2>🧭 Estructura de una sesión</h2>
+          </div>
+          <div class="fases-rehab">
+            <div class="fase-card">
+              <strong>1. Calentamiento (5–10 min)</strong>
+              <p class="nota">Paso suave y movilidad articular. Prepara al corazón y dilata los vasos sanguíneos de forma gradual.</p>
+            </div>
+            <div class="fase-card f2">
+              <strong>2. Fase principal (según pauta)</strong>
+              <p class="nota">Ritmo constante donde puedas hablar sin ahogarte ("test del habla", Borg 11–13 habitualmente).</p>
+            </div>
+            <div class="fase-card f3">
+              <strong>3. Vuelta a la calma (5–10 min)</strong>
+              <p class="nota">Reduce el ritmo poco a poco antes de detenerte por completo para evitar bajadas bruscas de tensión.</p>
+            </div>
+          </div>
+        </article>
+
+        <article class="tarjeta">
+          <div class="tarjeta-cab"><p class="etiqueta">Herramienta</p><h2>⏱️ Cronómetro de paseo</h2></div>
+          <div style="font-size:2.6rem;font-weight:800;letter-spacing:-.04em;font-variant-numeric:tabular-nums" id="cronometro" role="timer">00:00</div>
+          <div class="acciones-inline">
+            <button type="button" class="principal" style="width:auto;margin-top:0" id="btnCrono">Empezar</button>
+            <button type="button" class="secundario" id="btnPasarCrono">Pasar minutos al registro</button>
+          </div>
+        </article>
+
+        <article class="tarjeta">
+          <div class="tarjeta-cab">
+            <p class="etiqueta">Registro</p>
+            <h2>🚶 Actividad y esfuerzo</h2>
+          </div>
+          <form id="formAct">
+            <label for="aLugar">Entorno</label>
+            <select id="aLugar">
+              <option value="Al aire libre">Al aire libre</option>
+              <option value="En casa">En casa</option>
+              <option value="Gimnasio / Unidad RC">Gimnasio o unidad de rehabilitación</option>
+            </select>
+            <label for="aTipo">Actividad</label>
+            <select id="aTipo">
+              <option>Paseo</option>
+              <option>Marcha nórdica</option>
+              <option>Bicicleta estática</option>
+              <option>Ejercicios de fuerza pautados</option>
+              <option>Natación suave</option>
+              <option>Otro</option>
+            </select>
+            <label for="aMinutos">Minutos</label>
+            <input id="aMinutos" type="number" inputmode="numeric" min="1" max="600" required placeholder="25">
+
+            <label id="etiquetaBorg">Esfuerzo percibido (Escala Borg 6–20)</label>
+            <input type="hidden" id="aBorg" value="11 · Ligero">
+            <div class="borg-grid" id="selectorBorg" role="group" aria-labelledby="etiquetaBorg">
+              <button type="button" class="borg-btn" data-borg="7 · Muy muy ligero" aria-pressed="false"><strong>6–8</strong><span>Muy muy ligero</span></button>
+              <button type="button" class="borg-btn" data-borg="9 · Muy ligero" aria-pressed="false"><strong>9–10</strong><span>Muy ligero</span></button>
+              <button type="button" class="borg-btn sel" data-borg="11 · Ligero" aria-pressed="true"><strong>11–12</strong><span>Ligero (ideal inicio)</span></button>
+              <button type="button" class="borg-btn" data-borg="13 · Algo duro" aria-pressed="false"><strong>13–14</strong><span>Algo duro (habla posible)</span></button>
+              <button type="button" class="borg-btn" data-borg="15 · Duro" aria-pressed="false"><strong>15–16</strong><span>Duro (consultar límite)</span></button>
+              <button type="button" class="borg-btn" data-borg="17 · Muy duro" aria-pressed="false"><strong>17–20</strong><span>Muy duro (evitar)</span></button>
+            </div>
+
+            <label for="aNotas">Notas opcionales</label>
+            <input id="aNotas" placeholder="Ej.: sin fatiga, buen ritmo">
+            <button class="principal" type="submit">Guardar actividad</button>
+          </form>
+        </article>
+
+        <article class="tarjeta">
+          <div class="tarjeta-cab"><p class="etiqueta">Archivo</p><h2>📋 Historial de actividad</h2></div>
+          <ul class="lista" id="listaAct"></ul>
+        </article>
+
+        <article class="tarjeta">
+          <div class="tarjeta-cab"><p class="etiqueta">Fuentes</p><h2>🔗 Guías oficiales de ejercicio</h2></div>
+          <ul class="lista enlaces-oficiales">
+            <li>
+              <a href="https://bellvitgehospital.cat/es/aula-de-salud/ejercicios-de-rehabilitacion-cardiaca-en-casa-guia-para-recuperar-la-salud-del" target="_blank" rel="noopener noreferrer">Hospital Universitario de Bellvitge · Ejercicios de rehabilitación cardíaca en casa</a>
+              <span class="nota">Guía hospitalaria práctica para recuperar la capacidad física de forma segura.</span>
+            </li>
+            <li>
+              <a href="https://www.husc.es/archivos/cms/cardiologia/archivos/publico/material%20educativo/CUADERNO%20DE%20EJERCICIO%20REHABILITACION%20CARDI%CC%81ACA%5B12359%5D.pdf" target="_blank" rel="noopener noreferrer">Hospital Universitario de Santiago (CHUS) · Cuaderno de ejercicio en rehabilitación cardíaca (PDF)</a>
+              <span class="nota">Material educativo del Servicio de Cardiología con tablas ilustradas.</span>
+            </li>
+            <li>
+              <a href="https://fundaciondelcorazon.com/blog-impulso-vital/3806-cuanto-ejercicio-fisico-debes-hacer-para-mejorar-tu-salud-cardiovascular.html" target="_blank" rel="noopener noreferrer">Fundación Española del Corazón · Cuánto ejercicio físico hacer para la salud cardiovascular</a>
+              <span class="nota">Recomendaciones oficiales de frecuencia, duración e intensidad.</span>
+            </li>
+            <li>
+              <a href="https://fundaciondelcorazon.com/ejercicio/calculo-y-monitorizacion/3161-frecuencia-cardiaca-y-entrenamient.html" target="_blank" rel="noopener noreferrer">Fundación Española del Corazón · Frecuencia cardíaca y entrenamiento</a>
+              <span class="nota">Cómo controlar el pulso y el esfuerzo percibido durante el ejercicio.</span>
+            </li>
+            <li>
+              <a href="https://cardioprotegida.malaga.eu/export/sites/cardio/.galleries/Documentos-General/Guia-ejercicios-pacientes-enfermedad-cardiovascular.pdf" target="_blank" rel="noopener noreferrer">Guía de ejercicios para pacientes con enfermedad cardiovascular (PDF)</a>
+              <span class="nota">Programa ilustrado de calentamiento, fuerza suave y estiramientos.</span>
+            </li>
+          </ul>
+        </article>
+      </section>
+
+      <!-- NUTRICIÓN -->
+      <section id="vista-nutricion" class="vista" aria-label="Nutrición">
+        <article class="tarjeta">
+          <div class="tarjeta-cab">
+            <p class="etiqueta">Infografía</p>
+            <h2>🍽️ El Plato Mediterráneo</h2>
+          </div>
+          <p class="nota">Toca cada sección del plato para ver ejemplos y filtrar recomendaciones.</p>
+          <div class="infografia-caja plato-grid">
+            <svg class="plato-svg" viewBox="0 0 220 220" role="img" aria-label="Gráfico circular del plato saludable: 50 por ciento verduras, 25 por ciento proteína, 25 por ciento cereales integrales y aceite de oliva virgen extra en el centro">
+              <circle cx="110" cy="110" r="102" fill="var(--surface)" stroke="var(--line)" stroke-width="4"/>
+              <path d="M110,110 L110,14 A96,96 0 0,0 110,206 Z" fill="#2e9e5b" data-grupo-plato="verduras"/>
+              <path d="M110,110 L206,110 A96,96 0 0,0 110,14 Z" fill="#e0604f" data-grupo-plato="proteina"/>
+              <path d="M110,110 L110,206 A96,96 0 0,0 206,110 Z" fill="#d99b2b" data-grupo-plato="cereal"/>
+              <circle cx="110" cy="110" r="26" fill="#0d6e63" stroke="#fff" stroke-width="3" data-grupo-plato="grasa"/>
+              <text x="62" y="114" fill="#fff" font-size="12" font-weight="800" text-anchor="middle" pointer-events="none">50%</text>
+              <text x="155" y="75" fill="#fff" font-size="12" font-weight="800" text-anchor="middle" pointer-events="none">25%</text>
+              <text x="155" y="152" fill="#fff" font-size="12" font-weight="800" text-anchor="middle" pointer-events="none">25%</text>
+              <text x="110" y="114" fill="#fff" font-size="9" font-weight="800" text-anchor="middle" pointer-events="none">AOVE</text>
+            </svg>
+            <div class="leyenda-plato" id="leyendaPlato">
+              <button type="button" class="leyenda-item activo" data-grupo-plato="todos" aria-pressed="true">
+                <span class="color-chip" style="background:var(--brand)"></span>
+                <div><strong>Ver todos los alimentos</strong><br><span class="nota">Muestra la guía completa del semáforo nutricional.</span></div>
+              </button>
+              <button type="button" class="leyenda-item" data-grupo-plato="verduras" aria-pressed="false">
+                <span class="color-chip" style="background:#2e9e5b"></span>
+                <div><strong>50 % Verduras, hortalizas y fruta</strong><br><span class="nota">Aportan potasio, fibra y antioxidantes que ayudan a controlar la tensión.</span></div>
+              </button>
+              <button type="button" class="leyenda-item" data-grupo-plato="proteina" aria-pressed="false">
+                <span class="color-chip" style="background:#e0604f"></span>
+                <div><strong>25 % Proteína cardiosaludable</strong><br><span class="nota">Pescado azul, legumbres, aves sin piel y frutos secos naturales.</span></div>
+              </button>
+              <button type="button" class="leyenda-item" data-grupo-plato="cereal" aria-pressed="false">
+                <span class="color-chip" style="background:#d99b2b"></span>
+                <div><strong>25 % Cereales integrales</strong><br><span class="nota">Pan, arroz o pasta integral; evitan picos bruscos de glucosa.</span></div>
+              </button>
+            </div>
+          </div>
+        </article>
+
+        <article class="tarjeta">
+          <div class="tarjeta-cab"><p class="etiqueta">Semáforo</p><h2>🥗 Alimentos</h2></div>
+          <label for="buscadorAlimento">Buscar alimento</label>
+          <input id="buscadorAlimento" autocomplete="off" placeholder="Ej.: pescado, embutido, fruta, sal">
+          <p class="nota" style="margin-top:.5rem"><span class="punto verde"></span>Verde: a diario · <span class="punto ambar"></span>Ámbar: con moderación · <span class="punto rojo"></span>Rojo: ocasional</p>
+          <ul class="lista" id="listaAlimentos"></ul>
+        </article>
+
+        <article class="tarjeta">
+          <div class="tarjeta-cab"><p class="etiqueta">Fuentes</p><h2>🔗 Nutrición cardiovascular</h2></div>
+          <ul class="lista enlaces-oficiales">
+            <li>
+              <a href="https://fundaciondelcorazon.com/nutricion.html" target="_blank" rel="noopener noreferrer">Fundación Española del Corazón · Nutrición y salud cardiovascular</a>
+              <span class="nota">Guías sobre grasas saludables, reducción de sal, etiquetado y dietas tras un evento cardíaco.</span>
+            </li>
+            <li>
+              <a href="https://fundaciondelcorazon.com/nutricion/dieta/1250-dieta-cardiosaludable.html" target="_blank" rel="noopener noreferrer">Fundación Española del Corazón · Pautas de la dieta cardiosaludable</a>
+              <span class="nota">Recomendaciones prácticas por grupos de alimentos.</span>
+            </li>
+            <li>
+              <a href="https://estilosdevidasaludable.sanidad.gob.es/alimentacionSaludable/home.htm" target="_blank" rel="noopener noreferrer">Ministerio de Sanidad (España) · Alimentación Saludable</a>
+              <span class="nota">Portal oficial de prevención y hábitos nutricionales contrastados.</span>
+            </li>
+            <li>
+              <a href="https://dietamediterranea.com/" target="_blank" rel="noopener noreferrer">Fundación Dieta Mediterránea</a>
+              <span class="nota">Pirámide nutricional, recetas tradicionales y evidencia científica.</span>
+            </li>
+          </ul>
+          <p class="nota">Estas recomendaciones son orientativas y deben adaptarse si tomas anticoagulantes (como Sintrom) o tienes diabetes o enfermedad renal.</p>
+        </article>
+      </section>
+
+      <!-- EMOCIONES -->
+      <section id="vista-emociones" class="vista" aria-label="Emociones">
+        <article class="tarjeta">
+          <div class="tarjeta-cab"><p class="etiqueta">Hoy</p><h2>💚 ¿Cómo te encuentras?</h2></div>
+          <div id="grupoAnimo" role="group" aria-label="Elige cómo te sientes hoy" style="display:flex;gap:.5rem;flex-wrap:wrap"></div>
+          <label for="eNota">Nota (opcional)</label>
+          <input id="eNota" placeholder="Qué te ha pasado hoy">
+          <button type="button" class="principal" id="btnGuardarAnimo">Guardar</button>
+        </article>
+
+        <article class="tarjeta">
+          <div class="tarjeta-cab"><p class="etiqueta">Calma</p><h2>🌬️ Respiración guiada 4-7-8</h2></div>
+          <p class="nota">Ayuda a activar el sistema nervioso parasimpático y reducir la frecuencia cardíaca en momentos de inquietud.</p>
+          <button type="button" class="secundario" id="btnRespiracion">Empezar ejercicio guiado</button>
+          <p id="cajaRespiracion" style="font-size:1.35rem;font-weight:800;min-height:2rem;color:var(--brand);margin-top:.7rem"></p>
+        </article>
+
+        <article class="tarjeta">
+          <div class="tarjeta-cab"><p class="etiqueta">Archivo</p><h2>📋 Historial emocional</h2></div>
+          <ul class="lista" id="listaAnimo"></ul>
+        </article>
+
+        <article class="tarjeta">
+          <div class="tarjeta-cab"><p class="etiqueta">Fuentes</p><h2>🔗 Apoyo emocional</h2></div>
+          <ul class="lista enlaces-oficiales">
+            <li>
+              <a href="https://fundaciondelcorazon.com/prevencion/riesgo-cardiovascular/estres-y-ansiedad.html" target="_blank" rel="noopener noreferrer">Fundación Española del Corazón · Estrés, ansiedad y salud cardiovascular</a>
+              <span class="nota">Cómo influyen las emociones tras un infarto y pautas para gestionar el miedo o la ansiedad.</span>
+            </li>
+            <li>
+              <a href="https://estilosdevidasaludable.sanidad.gob.es/bienestarEmocional/home.htm" target="_blank" rel="noopener noreferrer">Ministerio de Sanidad (España) · Bienestar Emocional</a>
+              <span class="nota">Herramientas oficiales de relajación, manejo del estrés, sueño y apoyo psicológico.</span>
+            </li>
+            <li>
+              <a href="https://fundaciondelcorazon.com/corazon-facil/recursos-didacticos/fichas-pacientes.html" target="_blank" rel="noopener noreferrer">Fundación Española del Corazón · Fichas educativas para pacientes y familiares</a>
+              <span class="nota">Material oficial sobre aspectos psicológicos, descanso y vuelta a la vida cotidiana.</span>
+            </li>
+          </ul>
+          <p class="nota">Es habitual sentir temor, tristeza o irritabilidad tras un evento cardíaco. Si estos síntomas persisten más de dos semanas, coméntalo con tu equipo médico o de enfermería.</p>
+        </article>
+      </section>
+
+      <!-- GUÍA VISUAL -->
+      <section id="vista-guia" class="vista" aria-label="Guía visual">
+        <article class="tarjeta">
+          <div class="tarjeta-cab"><p class="etiqueta">Infografía</p><h2>🗺️ Los 5 pilares</h2></div>
+          <div class="fases-rehab">
+            <div class="fase-card">
+              <strong>1. Adherencia farmacológica</strong>
+              <p class="nota">Antiagregantes, estatinas o betabloqueantes protegen tus arterias. Nunca los suspendas sin consultar.</p>
+            </div>
+            <div class="fase-card f2">
+              <strong>2. Movimiento progresivo</strong>
+              <p class="nota">El corazón es un músculo: el ejercicio pautado mejora su eficiencia y reduce el cansancio.</p>
+            </div>
+            <div class="fase-card f3">
+              <strong>3. Control de factores</strong>
+              <p class="nota">Mantener tensión, colesterol LDL y glucosa en objetivos frena la progresión aterosclerótica.</p>
+            </div>
+            <div class="fase-card f4">
+              <strong>4. Cero tabaco y alimentación mediterránea</strong>
+              <p class="nota">Abandonar el tabaco y reducir la sal y ultraprocesados protege tus vasos desde las primeras semanas.</p>
+            </div>
+            <div class="fase-card f5">
+              <strong>5. Bienestar emocional y descanso</strong>
+              <p class="nota">Dormir bien, gestionar el estrés y expresar tus miedos con tu entorno y equipo sanitario acelera la recuperación.</p>
+            </div>
+          </div>
+        </article>
+
+        <article class="tarjeta">
+          <div class="tarjeta-cab"><p class="etiqueta">Alarma</p><h2>🚨 ¿Cuándo actuar de inmediato?</h2></div>
+          <div class="semaforo-box rojo">
+            <strong>Llama al 112 sin esperar si notas:</strong>
+            <p style="margin:.4rem 0 0">• Dolor, presión, quemazón o peso en el centro del pecho que dura más de 5 minutos.<br>
+            • Dolor que se irradia al brazo izquierdo, ambos brazos, espalda, cuello, mandíbula o boca del estómago.<br>
+            • Falta de aire repentina, sudor frío, mareo intenso o sensación de desmayo.</p>
+          </div>
+          <div class="semaforo-box ambar">
+            <strong>Consulta con tu equipo médico en 24–48 h si notas:</strong>
+            <p style="margin:.4rem 0 0">• Aumento rápido de peso (más de 1,5–2 kg en 2–3 días) o hinchazón nueva en tobillos.<br>
+            • Cansancio inusual al hacer actividades que antes tolerabas bien.<br>
+            • Efectos secundarios tras iniciar o ajustar una medicación.</p>
+          </div>
+        </article>
+      </section>
+
+      <!-- SOS -->
+      <section id="vista-sos" class="vista" aria-label="SOS">
+        <article class="tarjeta">
+          <div class="tarjeta-cab"><p class="etiqueta">Urgencia</p><h2>🆘 Protocolo de actuación</h2></div>
+          <ol class="pasos" id="listaProtocolo"></ol>
+          <button type="button" class="btn-sos" id="btn112">📞 Llamar al 112</button>
+          <button type="button" class="secundario" id="btnUbicacion">📍 Obtener mi ubicación GPS</button>
+          <p class="nota" id="salidaUbicacion" role="status" aria-live="polite" style="margin-top:.6rem"></p>
+        </article>
+      </section>
+
+      <!-- CUIDADOR -->
+      <section id="vista-cuidador" class="vista" aria-label="Cuidador">
+        <article class="tarjeta">
+          <div class="tarjeta-cab"><p class="etiqueta">Resumen</p><h2>👥 Para el cuidador</h2></div>
+          <div id="panelCuidador"></div>
+        </article>
+        <article class="tarjeta">
+          <div class="tarjeta-cab"><p class="etiqueta">Consulta</p><h2>📝 Notas y dudas</h2></div>
+          <label for="notaCuidador">Anotar observación o pregunta para el cardiólogo</label>
+          <input id="notaCuidador" placeholder="Ej.: preguntar si puede subir cuestas suaves">
+          <button type="button" class="principal" id="btnNotaCuidador">Añadir nota</button>
+          <ul class="lista" id="listaCuidador" style="margin-top:.9rem"></ul>
+        </article>
+      </section>
+
+      <!-- AJUSTES -->
+      <section id="vista-ajustes" class="vista" aria-label="Ajustes">
+        <article class="tarjeta">
+          <div class="tarjeta-cab"><p class="etiqueta">Perfil</p><h2>👤 Mis datos y objetivos</h2></div>
+          <form id="formPerfil">
+            <label for="pNombre">Nombre</label><input id="pNombre" autocomplete="name">
+            <label for="pEdad">Edad</label><input id="pEdad" type="number" inputmode="numeric">
+            <label for="pAltura">Altura (cm)</label><input id="pAltura" type="number" inputmode="numeric" placeholder="170">
+            <label for="pCardiologo">Cardiólogo o cardióloga</label><input id="pCardiologo">
+            <label for="pTelefono">Teléfono de contacto sanitario</label><input id="pTelefono" type="tel" inputmode="tel" autocomplete="tel">
+            <label for="pAlergias">Alergias</label><input id="pAlergias">
+            <label for="pDiagnostico">Diagnóstico o intervención</label><input id="pDiagnostico">
+            <label for="pRevision">Próxima revisión</label><input id="pRevision" type="date">
+            <label for="pMetaActividad">Objetivo diario de actividad (minutos)</label>
+            <input id="pMetaActividad" type="number" inputmode="numeric" step="5" placeholder="30">
+            <label for="pTabaco">¿Fumas actualmente?</label>
+            <select id="pTabaco"><option value="">No indicado</option><option value="no">No</option><option value="si">Sí</option></select>
+
+            <h3 style="margin-top:1.4rem;color:var(--brand)">Objetivos acordados con mi cardiólogo</h3>
+            <label for="oSisMin">Sistólica mínima</label><input id="oSisMin" type="number" inputmode="numeric">
+            <label for="oSisMax">Sistólica máxima</label><input id="oSisMax" type="number" inputmode="numeric">
+            <label for="oDiaMin">Diastólica mínima</label><input id="oDiaMin" type="number" inputmode="numeric">
+            <label for="oDiaMax">Diastólica máxima</label><input id="oDiaMax" type="number" inputmode="numeric">
+            <label for="oPulsoMin">Pulso mínimo</label><input id="oPulsoMin" type="number" inputmode="numeric">
+            <label for="oPulsoMax">Pulso máximo</label><input id="oPulsoMax" type="number" inputmode="numeric">
+            <label for="oGluMax">Glucemia máxima en ayunas (mg/dL)</label><input id="oGluMax" type="number" inputmode="numeric">
+            <label for="oLdlMax">Colesterol LDL máximo (mg/dL)</label><input id="oLdlMax" type="number" inputmode="numeric">
+            <label for="pProtocolo">Instrucciones de urgencia indicadas por mi cardiólogo</label>
+            <textarea id="pProtocolo" rows="3"></textarea>
+            <button class="principal" type="submit">Guardar perfil</button>
+          </form>
+        </article>
+
+        <article class="tarjeta">
+          <div class="tarjeta-cab"><p class="etiqueta">Recordatorios</p><h2>🔔 Avisos de medicación</h2></div>
+          <p class="nota">Activa los avisos del navegador para que te recuerde las tomas mientras la app esté abierta (aunque estés en otra pestaña).</p>
+          <button type="button" class="secundario" id="btnNotificaciones">Activar avisos</button>
+          <p class="nota" id="estadoNotificaciones" style="margin-top:.5rem"></p>
+        </article>
+
+        <article class="tarjeta">
+          <div class="tarjeta-cab"><p class="etiqueta">Consulta</p><h2>🖨️ Informe para el médico</h2></div>
+          <p class="nota">Resumen de los últimos 30 días: adherencia, medias de tensión, pulso, glucemia, colesterol y peso, además de tu medicación actual.</p>
+          <div class="acciones-inline">
+            <button type="button" class="secundario" id="btnImprimirInforme">Imprimir informe</button>
+            <button type="button" class="secundario" id="btnCompartirInforme">Compartir informe</button>
+          </div>
+        </article>
+
+        <article class="tarjeta">
+          <div class="tarjeta-cab"><p class="etiqueta">Accesibilidad</p><h2>🔠 Tamaño de letra y color</h2></div>
+          <p class="nota">Ajusta el tamaño del texto si te cuesta leerlo.</p>
+          <div class="acciones-inline">
+            <button type="button" class="secundario" id="btnLetraMenos" aria-label="Reducir el tamaño de letra">A−</button>
+            <button type="button" class="secundario" id="btnLetraMas" aria-label="Aumentar el tamaño de letra">A+</button>
+            <button type="button" class="secundario" id="btnLetraNormal">Tamaño normal</button>
+          </div>
+          <p class="nota" id="estadoLetra" style="margin-top:.5rem"></p>
+          <label for="selTema">Modo de color</label>
+          <select id="selTema">
+            <option value="dia">Día (claro)</option>
+            <option value="noche">Noche (oscuro)</option>
+            <option value="auto">Automático (según el sistema)</option>
+          </select>
+          <div class="check-item" style="margin-top:.9rem">
+            <span>Botón SOS flotante siempre visible</span>
+            <button type="button" class="secundario" id="btnSosFlotante" aria-pressed="false" style="margin-top:0">Desactivado</button>
+          </div>
+        </article>
+
+        <article class="tarjeta">
+          <div class="tarjeta-cab"><p class="etiqueta">Apariencia</p><h2>🖼️ Fotografías de las secciones</h2></div>
+          <p class="nota">Puedes personalizar la imagen de cabecera de cada sección desde su botón "Cambiar imagen" o restaurar las ilustraciones originales aquí.</p>
+          <button type="button" class="secundario" id="btnRestaurarBanners">Restaurar ilustraciones por defecto</button>
+        </article>
+
+        <article class="tarjeta">
+          <div class="tarjeta-cab"><p class="etiqueta">Privacidad</p><h2>💾 Mis datos</h2></div>
+          <p class="nota">Todo se guarda solo en este dispositivo. Haz copias de seguridad periódicas.</p>
+          <div class="acciones-inline">
+            <button type="button" class="secundario" id="btnExportar">Exportar copia (.json)</button>
+            <button type="button" class="secundario" id="btnInstalar">Instalar aplicación</button>
+          </div>
+          <label for="archivoImportar">Importar copia de seguridad</label>
+          <input id="archivoImportar" type="file" accept=".json">
+          <p class="nota" id="versionApp" style="margin-top:.8rem"></p>
+        </article>
+
+        <article class="tarjeta">
+          <div class="tarjeta-cab"><p class="etiqueta">Seguridad</p><h2>🔒 Bloqueo y borrado</h2></div>
+          <p class="nota">Protege la app con un PIN de 4 dígitos si compartes el dispositivo.</p>
+          <div class="acciones-inline">
+            <button type="button" class="secundario" id="btnPin">Activar bloqueo con PIN</button>
+            <button type="button" class="secundario" id="btnBloquear" hidden>Bloquear ahora</button>
+          </div>
+          <p class="nota" style="margin-top:1.3rem;color:var(--danger)"><strong>Zona delicada</strong></p>
+          <button type="button" class="secundario" id="btnBorrarTodo" style="border-color:var(--danger);color:var(--danger)">Borrar todos mis datos</button>
+        </article>
+      </section>
+
+    </main>
+  </div>
+</div>
+
+<!-- Navegación inferior (móvil) -->
+<nav class="nav-inferior" id="navInferior" aria-label="Navegación principal"></nav>
+
+<!-- Hoja «Más» -->
+<div class="hoja-fondo" id="hojaFondo" hidden></div>
+<div class="hoja" id="hojaMas" role="dialog" aria-modal="true" aria-label="Más secciones" hidden>
+  <div class="hoja-cab">
+    <h2>Más secciones</h2>
+    <button type="button" class="btn-icono" id="btnCerrarHoja" aria-label="Cerrar">✕</button>
+  </div>
+  <div class="hoja-rejilla" id="hojaRejilla"></div>
+</div>
+
+<!-- Bloqueo con PIN -->
+<div class="bloqueo" id="bloqueo" hidden>
+  <div class="bloqueo-caja">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4.4" y="10.4" width="15.2" height="10.2" rx="2.6"/><path d="M8 10.4V7.6a4 4 0 0 1 8 0v2.8"/></svg>
+    <h2>Re-Late Kardia</h2>
+    <p class="nota" id="bloqueoTexto">Introduce tu PIN de 4 dígitos</p>
+    <div class="pin-puntos" id="pinPuntos" aria-hidden="true"></div>
+    <div class="pin-teclado" id="pinTeclado"></div>
+  </div>
+</div>
+
+<input type="file" id="selectorFotoBanner" accept="image/*" hidden aria-hidden="true" tabindex="-1">
+
+<!-- Botón SOS flotante -->
+<button type="button" class="sos-flotante" id="sosFlotante" aria-label="Ir al protocolo de urgencia SOS" hidden>🆘</button>
+
+<!-- Informe imprimible -->
+<div id="informeImpresion" aria-hidden="true"></div>
+<script>
+(function(){
+"use strict";
+var CLAVE="relate_kardia_v2";
+var VERSION_APP="3.2.0";
+var BASE={
+  perfil:{},objetivos:{},medicacion:[],tomas:{},constantes:[],
+  actividad:[],animo:[],cuidador:[],banners:{}
+};
+var datos=normalizar(cargarYUnificar());
+var metricaActual="tension";
+var grupoPlatoActual="todos";
+var bannerEditando="";
+var medEditando="";
+var constEditando=-1;
+var tResize=null;
+var ultimoFoco=null;
+var pinBuffer="";
+var avisosEnviados={};
+var CIRC=2*Math.PI*52;
+var ESCALAS=[100,110,125];
+
+function clonar(o){return JSON.parse(JSON.stringify(o));}
+function $(id){return document.getElementById(id);}
+function n(v){return v===""||v===null||v===undefined||isNaN(+v)?0:+v;}
+function hoyISO(){
+  var d=new Date();
+  return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0");
+}
+function isoDe(d){
+  return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0");
+}
+function fecha(iso){if(!iso)return "—";var p=String(iso).split("-");return p.length===3?(p[2]+"/"+p[1]+"/"+p[0]):iso;}
+function fechaCorta(iso){if(!iso)return "";var p=String(iso).split("-");return p.length===3?(p[2]+"/"+p[1]):iso;}
+function esc(t){return String(t==null?"":t).replace(/[&<>"']/g,function(c){
+  return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c];});}
+function colorVar(nombre){return getComputedStyle(document.documentElement).getPropertyValue(nombre).trim()||"#888";}
+function svg(p){
+  return '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" '+
+    'stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">'+p+'</svg>';
+}
+
+/* Iconos */
+var ICO={
+  casa:'<path d="M3.2 10.6 12 3.4l8.8 7.2"/><path d="M5.6 9.6V19a1.4 1.4 0 0 0 1.4 1.4h3.1v-5.2h3.8v5.2H17a1.4 1.4 0 0 0 1.4-1.4V9.6"/>',
+  pulso:'<path d="M2.6 12.4h3.6l2.2-5.6 3.4 11 2.6-7.4 1.6 2h5.4"/>',
+  pastilla:'<g transform="rotate(-45 12 12)"><rect x="2.8" y="8.2" width="18.4" height="7.6" rx="3.8"/><path d="M12 8.2v7.6"/></g>',
+  paso:'<circle cx="13.4" cy="4.4" r="1.9"/><path d="M13.6 7.6 11 12.2l2.6 2.4.6 6"/><path d="M11 12.2 7.4 15l-.8 5.6"/><path d="M14.6 9.4 18 10.8"/>',
+  corazon:'<path d="M12 20.2s-7.2-4.5-7.2-9.7A4.1 4.1 0 0 1 12 7.2a4.1 4.1 0 0 1 7.2 3.3c0 5.2-7.2 9.7-7.2 9.7z"/>',
+  manzana:'<path d="M12 8.4c-3.1 0-5.2 2.1-5.2 5.2 0 3.3 2.2 6.4 5.2 6.4s5.2-3.1 5.2-6.4c0-3.1-2.1-5.2-5.2-5.2z"/><path d="M12 8.4V5.2"/><path d="M12 5.2c1.4-1.6 3.2-1.9 4.4-1.4-.3 1.6-1.9 2.6-4.4 1.4z"/>',
+  libro:'<path d="M4.4 5.6A2.6 2.6 0 0 1 7 3h12.6v14.4H7a2.6 2.6 0 0 0-2.6 2.6z"/><path d="M4.4 5.6v14.4"/>',
+  personas:'<circle cx="9.2" cy="8" r="3.1"/><path d="M3.4 19.4a5.8 5.8 0 0 1 11.6 0"/><path d="M16.2 6.2a3.1 3.1 0 0 1 0 5.9"/><path d="M17.4 19.4a5.8 5.8 0 0 0-2.1-4.4"/>',
+  alerta:'<path d="M12 3.6 21 19.4H3z"/><path d="M12 9.6v4.2"/><circle cx="12" cy="16.6" r=".9" fill="currentColor" stroke="none"/>',
+  ajustes:'<circle cx="12" cy="12" r="3.1"/><path d="M12 2.8v2.6M12 18.6v2.6M4.4 7.4l2.2 1.3M17.4 15.3l2.2 1.3M4.4 16.6l2.2-1.3M17.4 8.7l2.2-1.3"/>'
+};
+
+var SECCIONES=[
+  {id:"inicio",et:"Inicio",ico:ICO.casa,barra:true},
+  {id:"constantes",et:"Constantes",ico:ICO.pulso,barra:true},
+  {id:"medicacion",et:"Medicación",ico:ICO.pastilla,barra:true},
+  {id:"actividad",et:"Actividad",ico:ICO.paso,barra:true},
+  {id:"emociones",et:"Ánimo",ico:ICO.corazon,barra:true},
+  {id:"nutricion",et:"Nutrición",ico:ICO.manzana,desc:"Plato mediterráneo y semáforo de alimentos"},
+  {id:"guia",et:"Guía visual",ico:ICO.libro,desc:"Los 5 pilares y las señales de alarma"},
+  {id:"cuidador",et:"Cuidador",ico:ICO.personas,desc:"Resumen y notas para la consulta"},
+  {id:"sos",et:"SOS",ico:ICO.alerta,desc:"Protocolo de urgencia y llamada al 112"},
+  {id:"ajustes",et:"Ajustes",ico:ICO.ajustes,desc:"Perfil, objetivos y copia de seguridad"}
+];
+
+/* Normaliza la estructura de datos (evita errores al importar o migrar) */
+function normalizar(d){
+  d=(d&&typeof d==="object")?d:{};
+  d.perfil=(d.perfil&&typeof d.perfil==="object")?d.perfil:{};
+  d.objetivos=(d.objetivos&&typeof d.objetivos==="object")?d.objetivos:{};
+  d.banners=(d.banners&&typeof d.banners==="object")?d.banners:{};
+  d.tomas=(d.tomas&&typeof d.tomas==="object")?d.tomas:{};
+  ["medicacion","constantes","actividad","animo","cuidador"].forEach(function(k){
+    if(!Array.isArray(d[k])) d[k]=[];
+  });
+  d.medicacion=d.medicacion.map(function(m){
+    m=(m&&typeof m==="object")?m:{};
+    return {
+      id:m.id||("m"+Math.random().toString(36).slice(2,9)),
+      nombre:m.nombre||"",
+      dosis:m.dosis||"",
+      horas:Array.isArray(m.horas)?m.horas.filter(Boolean):[],
+      pauta:m.pauta||"",
+      foto:m.foto||""
+    };
+  });
+  d.constantes=d.constantes.filter(function(c){return c&&typeof c==="object";});
+  d.actividad=d.actividad.filter(function(a){return a&&typeof a==="object";});
+  d.animo=d.animo.filter(function(a){return a&&typeof a==="object";});
+  d.cuidador=d.cuidador.filter(function(a){return a&&typeof a==="object";});
+  return d;
+}
+
+function cargarYUnificar(){
+  var res=clonar(BASE);
+  try{
+    var v2=JSON.parse(localStorage.getItem(CLAVE)||"null");
+    if(v2){
+      for(var k in v2){ if(Object.prototype.hasOwnProperty.call(v2,k)) res[k]=v2[k]; }
+      return res;
+    }
+    var v1=JSON.parse(localStorage.getItem("relate_kardia_v1")||"{}");
+    for(var k1 in v1){ if(Object.prototype.hasOwnProperty.call(v1,k1)) res[k1]=v1[k1]; }
+
+    var ex=JSON.parse(localStorage.getItem("relate_kardia_extra_v1")||"{}");
+    if(ex.perfil){
+      if(ex.perfil.altura) res.perfil.altura=ex.perfil.altura;
+      if(ex.perfil.tabaco) res.perfil.tabaco=ex.perfil.tabaco;
+    }
+    if(ex.metaActividad) res.perfil.metaActividad=ex.metaActividad;
+
+    var actEx=JSON.parse(localStorage.getItem("relate_kardia_actividad_extra_v1")||"[]");
+    if(Array.isArray(actEx) && actEx.length){
+      actEx.forEach(function(a){
+        res.actividad.push({
+          fecha:a.fecha||hoyISO(),
+          lugar:a.lugar||"Al aire libre",
+          tipo:a.ejercicio||"Paseo",
+          minutos:Number(a.minutos)||0,
+          borg:a.esfuerzo?("Borg "+a.esfuerzo):"11 · Ligero",
+          notas:a.notas||""
+        });
+      });
+    }
+  }catch(e){}
+  return res;
+}
+
+function guardar(){
+  try{ localStorage.setItem(CLAVE,JSON.stringify(datos)); }
+  catch(e){ avisar("No se pudo guardar: el almacenamiento del navegador está lleno."); }
+}
+
+/* Aviso flotante no bloqueante */
+var toastTimer=null;
+function avisar(msg,ms){
+  var t=$("toast");
+  if(!t){
+    t=document.createElement("div");
+    t.id="toast"; t.className="toast";
+    t.setAttribute("role","status"); t.setAttribute("aria-live","polite");
+    document.body.appendChild(t);
+  }
+  t.textContent=msg; t.classList.add("visible");
+  clearTimeout(toastTimer);
+  toastTimer=setTimeout(function(){ t.classList.remove("visible"); },ms||3200);
+}
+
+/* Navegación */
+function construirNavegacion(){
+  var lateral=$("navLateral"), barra=$("navInferior"), hoja=$("hojaRejilla");
+  SECCIONES.forEach(function(s){
+    var b=document.createElement("button");
+    b.type="button"; b.dataset.vista=s.id;
+    b.innerHTML=svg(s.ico)+"<span>"+esc(s.et)+"</span>";
+    b.addEventListener("click",function(){ irAVista(s.id); });
+    lateral.appendChild(b);
+
+    if(s.barra){
+      var c=document.createElement("button");
+      c.type="button"; c.dataset.vista=s.id;
+      c.innerHTML=svg(s.ico)+"<span>"+esc(s.et)+"</span>";
+      c.addEventListener("click",function(){ irAVista(s.id); });
+      barra.appendChild(c);
+    } else {
+      var d=document.createElement("button");
+      d.type="button"; d.className="hoja-item";
+      d.innerHTML=svg(s.ico)+"<span>"+esc(s.et)+"</span><small>"+esc(s.desc||"")+"</small>";
+      d.addEventListener("click",function(){ cerrarHoja(); irAVista(s.id); });
+      hoja.appendChild(d);
+    }
+  });
+}
+
+function irAVista(nombre){
+  document.querySelectorAll(".vista").forEach(function(x){x.classList.remove("activo");});
+  var vista=$("vista-"+nombre);
+  if(vista) vista.classList.add("activo");
+
+  document.querySelectorAll("[data-vista]").forEach(function(b){
+    if(b.dataset.vista===nombre) b.setAttribute("aria-current","true");
+    else b.removeAttribute("aria-current");
+  });
+
+  var sec=SECCIONES.filter(function(s){return s.id===nombre;})[0];
+  $("tituloSeccion").textContent=sec?sec.et:"";
+  document.title="Re-Late Kardia · "+(sec?sec.et:"");
+
+  window.scrollTo(0,0);
+  if(nombre==="constantes") setTimeout(pintarGrafica,30);
+}
+
+/* Hoja «Más» */
+function abrirHoja(){
+  ultimoFoco=document.activeElement;
+  $("hojaFondo").hidden=false;
+  $("hojaMas").hidden=false;
+  $("btnMas").setAttribute("aria-expanded","true");
+  var primero=$("hojaRejilla").querySelector("button");
+  if(primero) primero.focus();
+}
+function cerrarHoja(){
+  if($("hojaMas").hidden) return;
+  $("hojaFondo").hidden=true;
+  $("hojaMas").hidden=true;
+  $("btnMas").setAttribute("aria-expanded","false");
+  if(ultimoFoco&&ultimoFoco.focus) ultimoFoco.focus();
+}
+
+/* Tema (día / noche / automático) */
+function temaElegido(){ return localStorage.getItem("relate_tema")||"dia"; }
+function temaEfectivo(){
+  var t=temaElegido();
+  if(t==="auto"){
+    return (window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches)?"noche":"dia";
+  }
+  return t;
+}
+function aplicarTema(){
+  var noche=temaEfectivo()==="noche";
+  if(noche) document.documentElement.setAttribute("data-tema","noche");
+  else document.documentElement.removeAttribute("data-tema");
+  document.querySelectorAll('[data-accion="tema"]').forEach(function(b){
+    b.textContent=noche?"☀️":"🌙";
+    b.setAttribute("aria-label",noche?"Cambiar a modo día":"Cambiar a modo noche");
+  });
+  var sel=$("selTema");
+  if(sel) sel.value=temaElegido();
+}
+
+/* Banners y fotos personalizadas */
+function svgDataUri(s){
+  return "url('data:image/svg+xml;utf8,"+encodeURIComponent(s)+"')";
+}
+var BANNERS_DEFECTO={
+  inicio:svgDataUri('<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 240"><defs><linearGradient id="g1" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#0b5a52"/><stop offset="100%" stop-color="#1fa48f"/></linearGradient></defs><rect width="800" height="240" fill="url(#g1)"/><circle cx="670" cy="70" r="110" fill="rgba(255,255,255,0.08)"/><circle cx="730" cy="180" r="80" fill="rgba(255,255,255,0.06)"/><path d="M0,185 Q200,130 400,175 T800,150 L800,240 L0,240 Z" fill="rgba(0,0,0,0.16)"/></svg>'),
+  medicacion:svgDataUri('<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 240"><defs><linearGradient id="g2" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#1b4965"/><stop offset="100%" stop-color="#3b82c4"/></linearGradient></defs><rect width="800" height="240" fill="url(#g2)"/><rect x="610" y="35" width="120" height="54" rx="27" transform="rotate(-25 670 62)" fill="rgba(255,255,255,0.14)"/><circle cx="540" cy="145" r="36" fill="rgba(255,255,255,0.1)"/></svg>'),
+  constantes:svgDataUri('<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 240"><defs><linearGradient id="g3" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#0b5a52"/><stop offset="100%" stop-color="#12897a"/></linearGradient></defs><rect width="800" height="240" fill="url(#g3)"/><polyline points="420,130 490,130 515,65 540,180 565,110 590,130 780,130" fill="none" stroke="rgba(255,255,255,0.25)" stroke-width="6" stroke-linecap="round"/></svg>'),
+  actividad:svgDataUri('<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 240"><defs><linearGradient id="g4" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#134e4a"/><stop offset="100%" stop-color="#2e9e5b"/></linearGradient></defs><rect width="800" height="240" fill="url(#g4)"/><path d="M0,190 Q240,120 480,165 T800,115 L800,240 L0,240 Z" fill="rgba(255,255,255,0.12)"/><circle cx="680" cy="60" r="38" fill="rgba(255,220,120,0.25)"/></svg>'),
+  nutricion:svgDataUri('<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 240"><defs><linearGradient id="g5" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#365314"/><stop offset="100%" stop-color="#65a30d"/></linearGradient></defs><rect width="800" height="240" fill="url(#g5)"/><circle cx="660" cy="120" r="85" fill="rgba(255,255,255,0.12)"/><circle cx="660" cy="120" r="55" fill="rgba(255,255,255,0.1)"/></svg>'),
+  emociones:svgDataUri('<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 240"><defs><linearGradient id="g6" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#312e81"/><stop offset="100%" stop-color="#6366f1"/></linearGradient></defs><rect width="800" height="240" fill="url(#g6)"/><circle cx="650" cy="120" r="95" fill="rgba(255,255,255,0.08)"/><circle cx="650" cy="120" r="55" fill="rgba(255,255,255,0.12)"/></svg>'),
+  guia:svgDataUri('<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 240"><defs><linearGradient id="g7" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#78350f"/><stop offset="100%" stop-color="#d97706"/></linearGradient></defs><rect width="800" height="240" fill="url(#g7)"/><rect x="560" y="45" width="160" height="150" rx="20" fill="rgba(255,255,255,0.12)"/></svg>')
+};
+
+function aplicarBanners(){
+  document.querySelectorAll(".banner-vista[data-banner]").forEach(function(el){
+    var key=el.dataset.banner;
+    var custom=datos.banners&&datos.banners[key];
+    el.style.backgroundImage=custom?("url('"+custom+"')"):(BANNERS_DEFECTO[key]||"");
+  });
+}
+function comprimirImagen(file,maxW,calidad,cb){
+  var fr=new FileReader();
+  fr.onerror=function(){ cb(""); };
+  fr.onload=function(){
+    var img=new Image();
+    img.onerror=function(){ cb(""); };
+    img.onload=function(){
+      try{
+        var l=Math.min(img.width,maxW), a=Math.round(img.height*(l/img.width));
+        var cv=document.createElement("canvas"); cv.width=l; cv.height=a;
+        cv.getContext("2d").drawImage(img,0,0,l,a);
+        cb(cv.toDataURL("image/jpeg",calidad));
+      }catch(e){ cb(""); }
+    };
+    img.src=fr.result;
+  };
+  fr.readAsDataURL(file);
+}
+/* Inicio */
+function pintarInicio(){
+  var p=datos.perfil||{};
+  $("fechaHoy").textContent=new Date().toLocaleDateString("es-ES",
+    {weekday:"long",day:"numeric",month:"long"});
+  $("saludo").textContent=p.nombre?("Hola, "+p.nombre):"Hola";
+
+  var d=hoyISO(), tomasHoy=datos.tomas[d]||{};
+  var hechas=datos.medicacion.filter(function(m){return !!tomasHoy[m.id];}).length;
+  var total=datos.medicacion.length;
+  $("resumenTomas").innerHTML=total?
+    "<p style='margin:0'><strong>"+hechas+" de "+total+"</strong> tomas registradas hoy.</p>"
+    :"<p class='nota' style='margin:0'>Todavía no has añadido medicación.</p>";
+  $("barraTomas").style.width=(total?Math.round(hechas/total*100):0)+"%";
+
+  /* Última constante + media de los últimos 7 días */
+  var c=datos.constantes[datos.constantes.length-1];
+  if(c){
+    var hace7=new Date(); hace7.setDate(hace7.getDate()-6);
+    var iso7=isoDe(hace7);
+    var recientes=datos.constantes.filter(function(x){return x.fecha>=iso7 && Number(x.sistolica)>0;});
+    var mediaTxt="";
+    if(recientes.length){
+      var ms=Math.round(recientes.reduce(function(s,x){return s+Number(x.sistolica);},0)/recientes.length);
+      var md=Math.round(recientes.reduce(function(s,x){return s+Number(x.diastolica);},0)/recientes.length);
+      mediaTxt="<p class='nota' style='margin:.5rem 0 0'>Media 7 días: <strong>"+ms+"/"+md+
+        " mmHg</strong> ("+recientes.length+(recientes.length===1?" registro":" registros")+")</p>";
+    }
+    $("resumenConstantes").innerHTML=
+      "<div class='datos'>"+
+      "<div class='dato'><b>"+esc(c.sistolica)+"/"+esc(c.diastolica)+"</b><span>Tensión</span></div>"+
+      "<div class='dato'><b>"+esc(c.pulso||"—")+"</b><span>Pulso</span></div>"+
+      "<div class='dato'><b>"+esc(c.glucemia||"—")+"</b><span>Glucemia</span></div>"+
+      "<div class='dato'><b>"+esc(c.colLDL||"—")+"</b><span>LDL</span></div>"+
+      "</div><p class='nota' style='margin:.6rem 0 0'>"+fecha(c.fecha)+"</p>"+
+      "<p style='margin:.4rem 0 0'><span class='badge "+(dentroObjetivo(c)?"b-ok":"b-fuera")+"'>"+
+      (dentroObjetivo(c)?"En objetivo":"Revisar con tu equipo")+"</span></p>"+mediaTxt;
+  } else { $("resumenConstantes").innerHTML="<p class='nota' style='margin:0'>Sin registros todavía.</p>"; }
+
+  /* Próxima revisión con cuenta atrás */
+  if(p.revision){
+    var hoy0=new Date(); hoy0.setHours(0,0,0,0);
+    var rev=new Date(p.revision+"T00:00:00");
+    var dias=Math.round((rev.getTime()-hoy0.getTime())/86400000);
+    var cuenta = dias>1 ? "Faltan "+dias+" días"
+      : dias===1 ? "Es mañana"
+      : dias===0 ? "¡Es hoy!"
+      : "Ya pasó (hace "+Math.abs(dias)+(Math.abs(dias)===1?" día":" días")+")";
+    $("proximaRevision").innerHTML="<p style='margin:0;font-weight:700;font-size:1.05rem'>"+fecha(p.revision)+"</p>"+
+      "<p class='nota' style='margin:.3rem 0 0'>"+cuenta+"</p>";
+  } else {
+    $("proximaRevision").innerHTML="<p class='nota' style='margin:0'>Sin fecha anotada en Ajustes.</p>";
+  }
+
+  var minHoy=datos.actividad.filter(function(a){return a.fecha===d;})
+    .reduce(function(s,a){return s+(Number(a.minutos)||0);},0);
+  var metaMin=Number(p.metaActividad)||0;
+  var hayAnimo=datos.animo.some(function(a){return a.fecha===d;});
+  var hayConst=datos.constantes.some(function(x){return x.fecha===d;});
+
+  var items=[];
+  if(total>0) items.push({ok:hechas>=total,txt:"Medicación de hoy ("+hechas+"/"+total+")",ir:"medicacion"});
+  if(metaMin>0) items.push({ok:minHoy>=metaMin,txt:"Actividad acordada ("+minHoy+"/"+metaMin+" min)",ir:"actividad"});
+  items.push({ok:hayAnimo,txt:"Registrar cómo me siento hoy",ir:"emociones"});
+  items.push({ok:hayConst,txt:"Anotar constantes (según pauta)",ir:"constantes"});
+
+  var completados=items.filter(function(i){return i.ok;}).length;
+  var pct=Math.round(completados/items.length*100);
+  $("barraProgresoDia").style.width=pct+"%";
+  $("anilloValor").style.strokeDashoffset=String(CIRC-(CIRC*pct/100));
+  $("anilloTexto").textContent=pct+"%";
+  $("anilloProgreso").setAttribute("aria-label",
+    "Progreso de hoy: "+pct+" por ciento. "+completados+" de "+items.length+" registros completados.");
+  $("fraseProgreso").textContent=pct===100
+    ? "¡Excelente! Has completado todos tus registros de hoy."
+    : "Has completado "+completados+" de "+items.length+" registros sugeridos hoy.";
+
+  $("listaObjetivosDia").innerHTML=items.map(function(i){
+    return "<div class='check-item'><span>"+(i.ok?"✅ ":"○ ")+esc(i.txt)+"</span>"+
+      "<button type='button' class='secundario' style='margin-top:0;padding:.35rem .7rem' data-ir='"+i.ir+"'>"+
+      (i.ok?"Ver":"Ir")+"</button></div>";
+  }).join("");
+}
+
+/* Adherencia de los últimos 7 días */
+function adherenciaDia(iso){
+  var tomas=datos.tomas[iso]||{};
+  var total=datos.medicacion.length;
+  if(!total) return 0;
+  var hechas=datos.medicacion.filter(function(m){return !!tomas[m.id];}).length;
+  return Math.round(hechas/total*100);
+}
+function pintarAdherencia(){
+  var panel=$("panelAdherencia");
+  if(!panel) return;
+  if(!datos.medicacion.length){
+    panel.innerHTML="<p class='nota' style='margin:0'>Añade tu medicación para ver tu adherencia de los últimos días.</p>";
+    return;
+  }
+  var letras=["D","L","M","X","J","V","S"];
+  var dias=[], suma=0;
+  for(var i=6;i>=0;i--){
+    var f=new Date(); f.setDate(f.getDate()-i);
+    var iso=isoDe(f);
+    var pct=adherenciaDia(iso);
+    dias.push({letra:letras[f.getDay()],pct:pct});
+    suma+=pct;
+  }
+  var media=Math.round(suma/7);
+  var hoy=dias[dias.length-1].pct;
+  var mensaje = media>=90 ? "¡Muy bien! Mantienes una adherencia excelente."
+    : media>=70 ? "Buena adherencia. Intenta no saltarte ninguna toma."
+    : "Tu adherencia puede mejorar. Si se te olvidan tomas, coméntalo con tu equipo sanitario.";
+  panel.innerHTML=
+    "<div class='datos'>"+
+    "<div class='dato'><b>"+hoy+"%</b><span>Hoy</span></div>"+
+    "<div class='dato'><b>"+media+"%</b><span>Media 7 días</span></div>"+
+    "</div>"+
+    "<div class='adherencia' role='img' aria-label='Adherencia de los últimos 7 días: "+
+      dias.map(function(d){return d.letra+" "+d.pct+" por ciento";}).join(", ")+"'>"+
+      dias.map(function(d){
+        var h=Math.max(4,Math.round(d.pct*0.62));
+        return "<div class='dia'><div class='barra-dia' style='height:"+h+"px'></div><span>"+d.letra+"</span></div>";
+      }).join("")+
+    "</div>"+
+    "<p class='nota' style='margin:.4rem 0 0'>"+mensaje+"</p>";
+}
+/* Medicación */
+function editarMedicacion(id){
+  var m=datos.medicacion.filter(function(x){return x.id===id;})[0];
+  if(!m) return;
+  medEditando=id;
+  $("medNombre").value=m.nombre; $("medDosis").value=m.dosis;
+  $("medHoras").value=m.horas.join(", "); $("medPauta").value=m.pauta;
+  $("btnGuardarMed").textContent="Actualizar medicación";
+  $("btnCancelarMed").hidden=false;
+  irAVista("medicacion");
+  $("medNombre").focus();
+  avisar("Editando «"+m.nombre+"». Guarda para confirmar.");
+}
+function cancelarEdicionMed(){
+  medEditando="";
+  $("formMed").reset();
+  $("btnGuardarMed").textContent="Guardar medicación";
+  $("btnCancelarMed").hidden=true;
+}
+function borrarMedicacion(id){
+  var m=datos.medicacion.filter(function(x){return x.id===id;})[0];
+  if(!m) return;
+  if(!confirm("¿Borrar «"+m.nombre+"» de tu medicación?\n\nEsta acción no se puede deshacer.")) return;
+  datos.medicacion=datos.medicacion.filter(function(x){return x.id!==id;});
+  if(medEditando===id) cancelarEdicionMed();
+  guardar(); pintar(); avisar("Medicación borrada.");
+}
+$("formMed").addEventListener("submit",function(ev){
+  ev.preventDefault();
+  var archivo=$("medFoto").files[0];
+  function terminar(foto){
+    if(medEditando){
+      datos.medicacion=datos.medicacion.map(function(m){
+        if(m.id!==medEditando) return m;
+        return {id:m.id,nombre:$("medNombre").value.trim(),dosis:$("medDosis").value.trim(),
+          horas:$("medHoras").value.split(",").map(function(h){return h.trim();}).filter(Boolean),
+          pauta:$("medPauta").value.trim(),foto:foto||m.foto||""};
+      });
+      cancelarEdicionMed();
+      avisar("Medicación actualizada.");
+    } else {
+      datos.medicacion.push({id:"m"+Date.now(),nombre:$("medNombre").value.trim(),
+        dosis:$("medDosis").value.trim(),
+        horas:$("medHoras").value.split(",").map(function(h){return h.trim();}).filter(Boolean),
+        pauta:$("medPauta").value.trim(),foto:foto||""});
+      $("formMed").reset();
+      avisar("Medicación guardada.");
+    }
+    guardar(); pintar();
+  }
+  if(archivo) comprimirImagen(archivo,240,0.65,terminar); else terminar("");
+});
+$("btnCancelarMed").addEventListener("click",function(){
+  cancelarEdicionMed();
+  avisar("Edición cancelada.");
+});
+function pintarMedicacion(){
+  var d=hoyISO(), tomasHoy=datos.tomas[d]||{};
+  var ul=$("listaMed"); ul.innerHTML="";
+  if(!datos.medicacion.length){ ul.innerHTML="<li class='nota'>Sin medicación registrada.</li>"; return; }
+  datos.medicacion.forEach(function(m){
+    var li=document.createElement("li");
+    li.innerHTML="<div style='display:flex;align-items:center;gap:.65rem'>"+
+      (m.foto?"<img src='"+m.foto+"' alt='' style='width:48px;height:48px;border-radius:12px;object-fit:cover'>":"")+
+      "<div><strong>"+esc(m.nombre)+"</strong><br><span class='nota'>"+esc(m.dosis)+" · "+
+      esc(m.horas.join(", "))+" · "+esc(m.pauta)+"</span></div></div>";
+    var acc=document.createElement("div"); acc.className="acciones-item";
+
+    var b=document.createElement("button");
+    b.type="button"; b.className="secundario"; b.style.marginTop="0";
+    b.textContent=tomasHoy[m.id]?"✔ Tomada":"Marcar";
+    b.setAttribute("aria-pressed",tomasHoy[m.id]?"true":"false");
+    b.addEventListener("click",function(){
+      datos.tomas[d]=datos.tomas[d]||{};
+      datos.tomas[d][m.id]=!datos.tomas[d][m.id];
+      guardar(); pintar();
+    });
+
+    var e=document.createElement("button");
+    e.type="button"; e.className="btn-mini editar"; e.textContent="✏️";
+    e.setAttribute("aria-label","Editar "+m.nombre);
+    e.addEventListener("click",function(){ editarMedicacion(m.id); });
+
+    var x=document.createElement("button");
+    x.type="button"; x.className="btn-mini"; x.textContent="🗑️";
+    x.setAttribute("aria-label","Borrar "+m.nombre);
+    x.addEventListener("click",function(){ borrarMedicacion(m.id); });
+
+    acc.appendChild(b); acc.appendChild(e); acc.appendChild(x);
+    li.appendChild(acc); ul.appendChild(li);
+  });
+}
+function comprobarRecordatorios(){
+  var ahora=new Date();
+  var hh=String(ahora.getHours()).padStart(2,"0")+":"+String(ahora.getMinutes()).padStart(2,"0");
+  var d=hoyISO(), tomasHoy=datos.tomas[d]||{};
+  var sinTomar=datos.medicacion.filter(function(m){ return m.horas.indexOf(hh)>=0 && !tomasHoy[m.id]; });
+  var av=$("avisoRecordatorio");
+  if(sinTomar.length){
+    av.hidden=false;
+    av.innerHTML="⏰ Recuerda tomar: <strong>"+sinTomar.map(function(m){return esc(m.nombre);}).join(", ")+"</strong>";
+    var clave=d+"-"+hh;
+    if(!avisosEnviados[clave] && "Notification" in window && Notification.permission==="granted"){
+      avisosEnviados[clave]=true;
+      try{
+        new Notification("Re-Late Kardia · Hora de tu medicación",{
+          body:sinTomar.map(function(m){return m.nombre+(m.dosis?" ("+m.dosis+")":"");}).join(", "),
+          tag:"relate-tomas-"+clave
+        });
+      }catch(e){}
+    }
+  } else { av.hidden=true; }
+}
+
+/* Constantes */
+function estadoObjetivo(c){
+  var o=datos.objetivos||{};
+  var comprobaciones=0, fuera=false;
+  function comparar(clave,campo,tipo){
+    var objetivo=Number(o[clave]), valor=Number(c&&c[campo]);
+    if(!(objetivo>0)||!(valor>0)) return;
+    comprobaciones++;
+    if(tipo==="min"&&valor<objetivo) fuera=true;
+    if(tipo==="max"&&valor>objetivo) fuera=true;
+  }
+  comparar("sisMin","sistolica","min");
+  comparar("sisMax","sistolica","max");
+  comparar("diaMin","diastolica","min");
+  comparar("diaMax","diastolica","max");
+  comparar("pulsoMin","pulso","min");
+  comparar("pulsoMax","pulso","max");
+  comparar("gluMax","glucemia","max");
+  comparar("ldlMax","colLDL","max");
+  if(comprobaciones===0) return null;
+  return !fuera;
+}
+function dentroObjetivo(c){ return estadoObjetivo(c)===true; }
+
+function editarConstante(i){
+  var c=datos.constantes[i]; if(!c) return;
+  constEditando=i;
+  $("cSistolica").value=c.sistolica||""; $("cDiastolica").value=c.diastolica||"";
+  $("cPulso").value=c.pulso||""; $("cPeso").value=c.peso||"";
+  $("cCintura").value=c.cintura||""; $("cGlucemia").value=c.glucemia||"";
+  $("cColTotal").value=c.colTotal||""; $("cColLDL").value=c.colLDL||"";
+  $("cNotas").value=c.notas||"";
+  $("btnGuardarConst").textContent="Actualizar registro";
+  $("btnCancelarConst").hidden=false;
+  irAVista("constantes");
+  $("cSistolica").focus();
+  avisar("Editando el registro del "+fecha(c.fecha)+". Guarda para confirmar.");
+}
+function cancelarEdicionConst(){
+  constEditando=-1;
+  $("formConst").reset();
+  $("btnGuardarConst").textContent="Guardar registro";
+  $("btnCancelarConst").hidden=true;
+}
+$("formConst").addEventListener("submit",function(ev){
+  ev.preventDefault();
+  var registro={
+    fecha:hoyISO(),
+    hora:new Date().toTimeString().slice(0,5),
+    sistolica:n($("cSistolica").value),
+    diastolica:n($("cDiastolica").value),
+    pulso:n($("cPulso").value),
+    peso:n($("cPeso").value),
+    cintura:n($("cCintura").value),
+    glucemia:n($("cGlucemia").value),
+    colTotal:n($("cColTotal").value),
+    colLDL:n($("cColLDL").value),
+    notas:$("cNotas").value.trim()
+  };
+  if(constEditando>=0 && datos.constantes[constEditando]){
+    registro.fecha=datos.constantes[constEditando].fecha;
+    datos.constantes[constEditando]=registro;
+    cancelarEdicionConst();
+    avisar("Registro actualizado.");
+  } else {
+    datos.constantes.push(registro);
+    $("formConst").reset();
+    avisar("Registro guardado.");
+  }
+  guardar(); pintar();
+  avisoTensionAlta(registro);
+});
+$("btnCancelarConst").addEventListener("click",function(){
+  cancelarEdicionConst();
+  avisar("Edición cancelada.");
+});
+
+function pintarConstantes(){
+  var tabla=$("tablaConst");
+  var total=datos.constantes.length;
+  var filas=datos.constantes.slice().reverse();
+  if(!filas.length){
+    tabla.innerHTML="<tbody><tr><td class='nota'>Sin registros todavía.</td></tr></tbody>";
+  } else {
+    var cabecera="<thead><tr>"+
+      "<th scope='col'>Fecha</th><th scope='col'>Tensión</th><th scope='col'>Pulso</th><th scope='col'>Peso</th>"+
+      "<th scope='col'>Cintura</th><th scope='col'>Glucemia</th><th scope='col'>Col. total</th>"+
+      "<th scope='col'>LDL</th><th scope='col'>Estado</th>"+
+      "<th scope='col'><span class='sr-only'>Acciones</span></th></tr></thead>";
+    var cuerpo=filas.map(function(c,i){
+      var idx=total-1-i;
+      var estado=estadoObjetivo(c);
+      var clase=estado===true?"b-ok":(estado===false?"b-fuera":"");
+      var texto=estado===true?"Dentro de objetivos introducidos"
+        :(estado===false?"Fuera de algún objetivo introducido":"Sin objetivos o datos suficientes");
+      return "<tr>"+
+        "<td>"+esc(fecha(c.fecha))+"</td>"+
+        "<td><strong>"+esc(c.sistolica)+"/"+esc(c.diastolica)+"</strong></td>"+
+        "<td>"+esc(c.pulso||"—")+"</td>"+
+        "<td>"+esc(c.peso||"—")+"</td>"+
+        "<td>"+esc(c.cintura||"—")+"</td>"+
+        "<td>"+esc(c.glucemia||"—")+"</td>"+
+        "<td>"+esc(c.colTotal||"—")+"</td>"+
+        "<td>"+esc(c.colLDL||"—")+"</td>"+
+        "<td><span class='badge "+clase+"'>"+texto+"</span></td>"+
+        "<td><div class='acciones-item'>"+
+        "<button type='button' class='btn-mini editar' data-editar-const='"+idx+"' aria-label='Editar registro del "+esc(fecha(c.fecha))+"'>✏️</button>"+
+        "<button type='button' class='btn-mini' data-borrar-const='"+idx+"' aria-label='Borrar registro del "+esc(fecha(c.fecha))+"'>🗑️</button>"+
+        "</div></td>"+
+        "</tr>";
+    }).join("");
+    tabla.innerHTML=cabecera+"<tbody>"+cuerpo+"</tbody>";
+  }
+  pintarLecturaOrientativa();
+  pintarGrafica();
+  pintarTablasOrientativas();
+}
+
+function pintarLecturaOrientativa(){
+  var c=datos.constantes[datos.constantes.length-1];
+  var semaforo=$("panelSemaforo"), indices=$("panelIndices");
+  if(!c){
+    semaforo.innerHTML="<div class='semaforo-box ambar'><strong>Sin mediciones aún</strong>"+
+      "<p class='nota' style='margin:.2rem 0 0'>Añade una medición si forma parte de la pauta que te ha dado tu equipo sanitario.</p></div>";
+    indices.innerHTML="";
+    return;
+  }
+  var avisos=[], nivel=0, objetivos=datos.objetivos||{};
+
+  if(Number(c.sistolica)>=180||Number(c.diastolica)>=120){
+    nivel=2;
+    avisos.push("La tensión registrada es muy elevada. Si tienes síntomas graves, llama al 112; si no, contacta con un profesional sanitario para recibir indicaciones.");
+  } else if(Number(c.sistolica)>=140||Number(c.diastolica)>=90||
+    (Number(objetivos.sisMax)>0&&Number(c.sistolica)>Number(objetivos.sisMax))||
+    (Number(objetivos.diaMax)>0&&Number(c.diastolica)>Number(objetivos.diaMax))){
+    nivel=1;
+    avisos.push("Esta medición puede requerir revisión. Una toma aislada no permite establecer un diagnóstico.");
+  }
+
+  if(Number(c.glucemia)>=126){
+    nivel=Math.max(nivel,1);
+    avisos.push("La glucemia registrada merece valoración profesional; una medición aislada no establece un diagnóstico.");
+  } else if(Number(c.glucemia)>=100){
+    nivel=Math.max(nivel,1);
+    avisos.push("Anota el resultado y consúltalo con tu equipo sanitario, especialmente si se repite.");
+  }
+
+  if(Number(objetivos.ldlMax)>0&&Number(c.colLDL)>Number(objetivos.ldlMax)){
+    nivel=Math.max(nivel,1);
+    avisos.push("El LDL supera el objetivo que has introducido. Confirma la interpretación con tu equipo sanitario.");
+  }
+
+  var clase=nivel===2?"rojo":"ambar";
+  var titulo=nivel===2?"Atención prioritaria":"Lectura orientativa; no determina si el valor es adecuado para ti";
+  var textoAvisos=avisos.length
+    ? avisos.map(function(a){return "<p style='margin:.35rem 0 0'>• "+esc(a)+"</p>";}).join("")
+    : "<p style='margin:.35rem 0 0'>No hay avisos automáticos para esta medición. Eso no confirma que el valor sea adecuado para ti. Contrástalo con tu equipo sanitario.</p>";
+
+  semaforo.innerHTML="<div class='semaforo-box "+clase+"'><strong>"+titulo+"</strong>"+textoAvisos+"</div>";
+
+  var altura=(Number((datos.perfil||{}).altura)||0)/100;
+  var imc=Number(c.peso)>0&&altura>0?(Number(c.peso)/(altura*altura)).toFixed(1):"—";
+  var tabaco=(datos.perfil||{}).tabaco==="si"?"Sí":((datos.perfil||{}).tabaco==="no"?"No":"—");
+
+  indices.innerHTML="<div class='datos'>"+
+    "<div class='dato'><b>"+esc(imc)+"</b><span>IMC (kg/m²)</span></div>"+
+    "<div class='dato'><b>"+esc(Number(c.cintura)>0?c.cintura+" cm":"—")+"</b><span>Cintura</span></div>"+
+    "<div class='dato'><b>"+esc(tabaco)+"</b><span>Tabaco</span></div>"+
+    "</div>";
+}
+function prepararCanvas(cv){
+  var dpr=window.devicePixelRatio||1;
+  var w=Math.max(320,Math.round(cv.clientWidth||720));
+  var h=Math.round(w*280/720);
+  cv.width=Math.round(w*dpr);
+  cv.height=Math.round(h*dpr);
+  var ctx=cv.getContext("2d");
+  ctx.setTransform(dpr,0,0,dpr,0,0);
+  return {ctx:ctx,w:w,h:h};
+}
+
+function pintarGrafica(){
+  var cv=$("graficaSeguimiento"); if(!cv) return;
+  var prep=prepararCanvas(cv);
+  var ctx=prep.ctx, w=prep.w, h=prep.h;
+  ctx.clearRect(0,0,w,h);
+  var defs={
+    tension:{nombre:"Tensión arterial",unidad:"mmHg",cero:false,series:[
+      {et:"Sistólica",color:"#e0564a",get:function(c){return c.sistolica||0;}},
+      {et:"Diastólica",color:"#2f9e73",get:function(c){return c.diastolica||0;}}]},
+    glucemia:{nombre:"Glucemia",unidad:"mg/dL",cero:true,series:[
+      {et:"Glucemia",color:"#e08a2e",get:function(c){return c.glucemia||0;}}]},
+    colesterol:{nombre:"Colesterol",unidad:"mg/dL",cero:true,series:[
+      {et:"Total",color:"#7a5cf0",get:function(c){return c.colTotal||0;}},
+      {et:"LDL",color:"#d1537f",get:function(c){return c.colLDL||0;}}]},
+    peso:{nombre:"Peso",unidad:"kg",cero:false,series:[
+      {et:"Peso",color:"#3b82c4",get:function(c){return c.peso||0;}}]}
+  };
+  var def=defs[metricaActual];
+  var recs=datos.constantes.filter(function(c){
+    return def.series.some(function(s){return s.get(c)>0;});
+  }).slice(-12);
+  var est=$("estadisticasSeguimiento");
+
+  if(recs.length<2){
+    ctx.fillStyle=colorVar("--ink-2"); ctx.font="600 14px system-ui,sans-serif";
+    ctx.textAlign="center"; ctx.textBaseline="middle";
+    ctx.fillText("Añade al menos dos registros para ver la gráfica.",w/2,h/2);
+    est.innerHTML="";
+    cv.setAttribute("aria-label","Gráfica de "+def.nombre+". Todavía no hay datos suficientes.");
+    return;
+  }
+
+  var etiquetas=recs.map(function(c){return fechaCorta(c.fecha);});
+  var series=def.series.map(function(s){return {et:s.et,color:s.color,datos:recs.map(s.get)};});
+  var pad={i:54,d:18,a:40,b:36}, aw=w-pad.i-pad.d, ah=h-pad.a-pad.b, nn=recs.length;
+  var vals=[]; series.forEach(function(s){s.datos.forEach(function(v){if(v>0)vals.push(v);});});
+  var maxV=Math.max.apply(null,vals), minV=Math.min.apply(null,vals), mg=Math.max((maxV-minV)*0.18,1);
+  var lo=def.cero?0:Math.max(0,Math.floor(minV-mg)), hi=Math.ceil(maxV+mg);
+  if(hi<=lo) hi=lo+1;
+  function X(i){return pad.i+(nn<=1?aw/2:(i/(nn-1))*aw);}
+  function Y(v){return pad.a+ah-((v-lo)/(hi-lo))*ah;}
+
+  ctx.strokeStyle=colorVar("--line"); ctx.lineWidth=1;
+  ctx.fillStyle=colorVar("--ink-2"); ctx.font="500 11px system-ui,sans-serif";
+  ctx.textAlign="right"; ctx.textBaseline="middle";
+  for(var k=0;k<=4;k++){
+    var y=pad.a+ah-(k/4)*ah;
+    ctx.beginPath(); ctx.moveTo(pad.i,y); ctx.lineTo(pad.i+aw,y); ctx.stroke();
+    ctx.fillText(Math.round(lo+(hi-lo)*(k/4)),pad.i-9,y);
+  }
+  ctx.textAlign="center"; ctx.textBaseline="top";
+  var salto=Math.max(1,Math.ceil(nn/4));
+  for(var i=0;i<nn;i+=salto) ctx.fillText(etiquetas[i],X(i),pad.a+ah+9);
+
+  series.forEach(function(s){
+    ctx.strokeStyle=s.color; ctx.lineWidth=2.6; ctx.beginPath(); var abierto=false;
+    s.datos.forEach(function(v,idx){
+      if(v<=0){abierto=false;return;}
+      if(!abierto){ctx.moveTo(X(idx),Y(v));abierto=true;}else ctx.lineTo(X(idx),Y(v));
+    });
+    ctx.stroke(); ctx.fillStyle=s.color;
+    s.datos.forEach(function(v,idx){
+      if(v>0){ctx.beginPath();ctx.arc(X(idx),Y(v),3.8,0,Math.PI*2);ctx.fill();}
+    });
+  });
+
+  var lx=pad.i; ctx.textBaseline="middle"; ctx.textAlign="left";
+  series.forEach(function(s){
+    ctx.fillStyle=s.color; ctx.beginPath(); ctx.arc(lx+5,pad.a-18,5,0,Math.PI*2); ctx.fill();
+    ctx.fillStyle=colorVar("--ink"); ctx.font="700 12px system-ui,sans-serif";
+    ctx.fillText(s.et,lx+16,pad.a-18); lx+=ctx.measureText(s.et).width+36;
+  });
+
+  est.innerHTML="";
+  var resumen=[];
+  series.forEach(function(s){
+    var v=s.datos.filter(function(x){return x>0;}); if(!v.length) return;
+    var mn=Math.min.apply(null,v), mx=Math.max.apply(null,v);
+    var med=Math.round(v.reduce(function(a,b){return a+b;},0)/v.length);
+    var d=document.createElement("div"); d.className="dato";
+    d.innerHTML="<b>"+mn+" · "+med+" · "+mx+"</b><span>"+esc(s.et)+" mín·med·máx</span>";
+    est.appendChild(d);
+    resumen.push(s.et+": último valor "+v[v.length-1]+" "+def.unidad+", mínimo "+mn+", máximo "+mx);
+  });
+  cv.setAttribute("aria-label","Gráfica de "+def.nombre+". "+resumen.join(". ")+".");
+}
+
+var ORIENTATIVAS=[
+ {t:"Tensión arterial (mmHg)",f:[["Óptima","< 120 / 80","verde"],["Normal","120–129 / 80–84","verde"],["Normal-alta","130–139 / 85–89","ambar"],["Hipertensión","≥ 140 / 90","rojo"]]},
+ {t:"Glucemia en ayunas (mg/dL)",f:[["Normal","70–99","verde"],["Prediabetes","100–125","ambar"],["Diabetes (confirmar)","≥ 126","rojo"]]},
+ {t:"Colesterol LDL (mg/dL)",f:[["Objetivo tras infarto","< 55","verde"],["Alto riesgo","< 70","verde"],["Población general","< 100","ambar"],["Elevado","≥ 100","rojo"]]}
+];
+function pintarTablasOrientativas(){
+  $("tablaOrientativa").innerHTML=ORIENTATIVAS.map(function(g){
+    return "<h3 style='margin-top:1rem;color:var(--brand)'>"+esc(g.t)+"</h3>"+
+      "<div class='tabla-scroll'><table><tbody>"+
+      g.f.map(function(r){
+        return "<tr><td><span class='punto "+r[2]+"'></span>"+esc(r[0])+"</td><td>"+esc(r[1])+"</td></tr>";
+      }).join("")+"</tbody></table></div>";
+  }).join("");
+}
+
+/* Actividad */
+var crono=null, seg=0;
+$("btnCrono").addEventListener("click",function(){
+  if(crono){ clearInterval(crono); crono=null; this.textContent="Empezar"; }
+  else{
+    this.textContent="Pausar";
+    crono=setInterval(function(){
+      seg++;
+      $("cronometro").textContent=String(Math.floor(seg/60)).padStart(2,"0")+":"+String(seg%60).padStart(2,"0");
+    },1000);
+  }
+});
+$("btnPasarCrono").addEventListener("click",function(){
+  var mins=Math.max(1,Math.round(seg/60));
+  $("aMinutos").value=mins;
+  $("aMinutos").focus();
+});
+$("selectorBorg").addEventListener("click",function(ev){
+  var b=ev.target.closest(".borg-btn"); if(!b) return;
+  document.querySelectorAll(".borg-btn").forEach(function(x){
+    x.classList.remove("sel"); x.setAttribute("aria-pressed","false");
+  });
+  b.classList.add("sel"); b.setAttribute("aria-pressed","true");
+  $("aBorg").value=b.dataset.borg;
+});
+$("formAct").addEventListener("submit",function(ev){
+  ev.preventDefault();
+  datos.actividad.push({
+    fecha:hoyISO(),lugar:$("aLugar").value,tipo:$("aTipo").value,
+    minutos:n($("aMinutos").value),borg:$("aBorg").value,notas:$("aNotas").value.trim()
+  });
+  guardar(); $("formAct").reset();
+  seg=0; $("cronometro").textContent="00:00";
+  pintar(); avisar("Actividad guardada.");
+});
+function pintarActividad(){
+  var ul=$("listaAct");
+  if(!datos.actividad.length){ ul.innerHTML="<li class='nota'>Sin actividad registrada.</li>"; return; }
+  var total=datos.actividad.length;
+  ul.innerHTML=datos.actividad.slice(-12).reverse().map(function(a,i){
+    var idx=total-1-i;
+    return "<li><div><strong>"+esc(a.tipo)+"</strong> · "+esc(a.minutos)+" min ("+esc(a.lugar||"Paseo")+")<br>"+
+      "<span class='nota'>Esfuerzo: "+esc(a.borg||a.sensacion||"Ligero")+(a.notas?" · "+esc(a.notas):"")+"</span></div>"+
+      "<div class='acciones-item'><span class='nota'>"+fecha(a.fecha)+"</span>"+
+      "<button type='button' class='btn-mini' data-borrar-act='"+idx+"' aria-label='Borrar actividad del "+esc(fecha(a.fecha))+"'>🗑️</button></div></li>";
+  }).join("");
+}
+$("listaAct").addEventListener("click",function(ev){
+  var b=ev.target.closest("[data-borrar-act]"); if(!b) return;
+  var i=Number(b.dataset.borrarAct), a=datos.actividad[i]; if(!a) return;
+  if(!confirm("¿Borrar la actividad «"+a.tipo+"» del "+fecha(a.fecha)+"?\n\nEsta acción no se puede deshacer.")) return;
+  datos.actividad.splice(i,1);
+  guardar(); pintar(); avisar("Actividad borrada.");
+});
+
+/* Nutrición */
+var ALIMENTOS=[
+ ["Verduras y hortalizas frescas","verde","verduras"],["Frutas enteras de temporada","verde","verduras"],
+ ["Legumbres (lentejas, garbanzos, alubias)","verde","proteina"],["Pescado azul (sardina, caballa, salmón)","verde","proteina"],
+ ["Frutos secos naturales sin sal","verde","proteina"],["Aceite de oliva virgen extra","verde","grasa"],
+ ["Pan, arroz y pasta integrales","ambar","cereal"],["Lácteos naturales semidesnatados","ambar","proteina"],
+ ["Carnes blancas sin piel (pollo, pavo)","ambar","proteina"],["Huevos","ambar","proteina"],
+ ["Embutidos y carnes procesadas","rojo","proteina"],["Bollería industrial y ultraprocesados","rojo","cereal"],
+ ["Mantequilla, nata y margarina","rojo","grasa"],["Refrescos azucarados y alcohol","rojo","cereal"],
+ ["Sal de mesa en exceso y precocinados","rojo","verduras"]
+];
+function pintarNutricion(){
+  var q=($("buscadorAlimento").value||"").toLowerCase();
+  var ul=$("listaAlimentos");
+  ul.innerHTML=ALIMENTOS.filter(function(a){
+    var okTexto=a[0].toLowerCase().indexOf(q)>=0;
+    var okGrupo=grupoPlatoActual==="todos"||a[2]===grupoPlatoActual;
+    return okTexto&&okGrupo;
+  }).map(function(a){
+    return "<li><span><span class='punto "+a[1]+"'></span>"+esc(a[0])+"</span></li>";
+  }).join("")||"<li class='nota'>Sin resultados en esta selección.</li>";
+}
+
+/* Emociones */
+var ESTADOS=["😀 Bien","😐 Normal","😟 Preocupado","😢 Bajo"];
+function pintarEmociones(){
+  var g=$("grupoAnimo");
+  if(!g.dataset.hecho){
+    g.innerHTML=ESTADOS.map(function(e){
+      return "<button type='button' class='secundario' style='margin-top:0'>"+e+"</button>";
+    }).join("");
+    Array.prototype.forEach.call(g.children,function(b){
+      b.setAttribute("aria-pressed","false");
+      b.addEventListener("click",function(){
+        Array.prototype.forEach.call(g.children,function(x){
+          x.style.borderColor=""; x.style.color=""; x.setAttribute("aria-pressed","false");
+        });
+        b.style.borderColor="var(--brand)"; b.style.color="var(--brand)";
+        b.setAttribute("aria-pressed","true");
+        g.dataset.sel=b.textContent;
+      });
+    });
+    g.dataset.hecho="1";
+  }
+  var ul=$("listaAnimo");
+  var total=datos.animo.length;
+  ul.innerHTML=datos.animo.length?datos.animo.slice(-10).reverse().map(function(a,i){
+    var idx=total-1-i;
+    return "<li><span>"+esc(a.estado)+" "+esc(a.nota||"")+"</span>"+
+      "<div class='acciones-item'><span class='nota'>"+fecha(a.fecha)+"</span>"+
+      "<button type='button' class='btn-mini' data-borrar-animo='"+idx+"' aria-label='Borrar registro de ánimo del "+esc(fecha(a.fecha))+"'>🗑️</button></div></li>";
+  }).join(""):"<li class='nota'>Sin registros.</li>";
+}
+$("listaAnimo").addEventListener("click",function(ev){
+  var b=ev.target.closest("[data-borrar-animo]"); if(!b) return;
+  var i=Number(b.dataset.borrarAnimo), a=datos.animo[i]; if(!a) return;
+  if(!confirm("¿Borrar el registro de ánimo del "+fecha(a.fecha)+"?\n\nEsta acción no se puede deshacer.")) return;
+  datos.animo.splice(i,1);
+  guardar(); pintar(); avisar("Registro borrado.");
+});
+$("btnGuardarAnimo").addEventListener("click",function(){
+  datos.animo.push({fecha:hoyISO(),estado:$("grupoAnimo").dataset.sel||"😐 Normal",nota:$("eNota").value.trim()});
+  guardar(); $("eNota").value=""; pintar(); avisar("Ánimo registrado.");
+});
+$("btnRespiracion").addEventListener("click",function(){
+  var fases=[["Inhala suavemente",4],["Mantén el aire",7],["Exhala despacio",8]];
+  var caja=$("cajaRespiracion"), i=0;
+  function paso(){
+    if(i>=fases.length*3){ caja.textContent="Ejercicio completado. Tómate un momento."; return; }
+    var f=fases[i%3], s=f[1];
+    caja.textContent=f[0]+" ("+s+" s)";
+    var t=setInterval(function(){
+      s--; caja.textContent=f[0]+" ("+s+" s)";
+      if(s<=0){ clearInterval(t); i++; paso(); }
+    },1000);
+  }
+  paso();
+});
+
+/* SOS */
+function pintarSos(){
+  var p=datos.perfil||{};
+  var pasos=["Llama al 112 y sigue sus instrucciones.",
+    "Siéntate o túmbate en posición semiincorporada y mantén la calma.",
+    "No conduzcas ni realices esfuerzos físicos.",
+    "Afloja la ropa ajustada y avisa a alguien cercano.",
+    "Ten a mano tu lista de medicación para el equipo sanitario."];
+  var ol=$("listaProtocolo");
+  ol.innerHTML=pasos.map(function(t){return "<li>"+esc(t)+"</li>";}).join("");
+  if(p.protocolo) ol.innerHTML+="<li><strong>Instrucciones de mi cardiólogo:</strong> "+esc(p.protocolo)+"</li>";
+}
+$("btn112").addEventListener("click",function(){ window.location.href="tel:112"; });
+$("btnUbicacion").addEventListener("click",function(){
+  var s=$("salidaUbicacion");
+  if(!navigator.geolocation){ s.textContent="Tu dispositivo no permite obtener la ubicación."; return; }
+  s.textContent="Obteniendo ubicación…";
+  navigator.geolocation.getCurrentPosition(function(pos){
+    var lat=pos.coords.latitude.toFixed(5), lon=pos.coords.longitude.toFixed(5);
+    s.innerHTML="Ubicación: <strong>"+lat+", "+lon+"</strong> · "+
+      "<a target='_blank' rel='noopener' href='https://www.openstreetmap.org/?mlat="+lat+"&mlon="+lon+"'>ver en el mapa</a>";
+  },function(){ s.textContent="No se pudo obtener la ubicación."; });
+});
+
+/* Cuidador */
+function pintarCuidador(){
+  var d=hoyISO(), tomasHoy=datos.tomas[d]||{};
+  var hechas=datos.medicacion.filter(function(m){return !!tomasHoy[m.id];}).length;
+  var c=datos.constantes[datos.constantes.length-1];
+  var estadosObjetivo=datos.constantes.map(estadoObjetivo);
+  var fuera=estadosObjetivo.filter(function(e){return e===false;}).length;
+  var sinEvaluar=estadosObjetivo.filter(function(e){return e===null;}).length;
+
+  $("panelCuidador").innerHTML="<div class='datos'>"+
+    "<div class='dato'><b>"+hechas+"/"+datos.medicacion.length+"</b><span>Tomas hoy</span></div>"+
+    "<div class='dato'><b>"+(c?(esc(c.sistolica)+"/"+esc(c.diastolica)):"—")+"</b><span>Última TA</span></div>"+
+    "<div class='dato'><b>"+(c&&c.glucemia?esc(c.glucemia):"—")+"</b><span>Glucemia</span></div>"+
+    "<div class='dato'><b>"+fuera+"</b><span>Fuera objetivo</span></div>"+
+    "<div class='dato'><b>"+sinEvaluar+"</b><span>Sin evaluar</span></div>"+
+    "</div>";
+  var ul=$("listaCuidador");
+  var total=datos.cuidador.length;
+  ul.innerHTML=datos.cuidador.length?datos.cuidador.slice(-10).reverse().map(function(x,i){
+    var idx=total-1-i;
+    return "<li><span>"+esc(x.texto)+"</span>"+
+      "<div class='acciones-item'><span class='nota'>"+fecha(x.fecha)+"</span>"+
+      "<button type='button' class='btn-mini' data-borrar-nota='"+idx+"' aria-label='Borrar nota del "+esc(fecha(x.fecha))+"'>🗑️</button></div></li>";
+  }).join(""):"<li class='nota'>Sin notas.</li>";
+}
+$("listaCuidador").addEventListener("click",function(ev){
+  var b=ev.target.closest("[data-borrar-nota]"); if(!b) return;
+  var i=Number(b.dataset.borrarNota), x=datos.cuidador[i]; if(!x) return;
+  if(!confirm("¿Borrar esta nota del "+fecha(x.fecha)+"?\n\nEsta acción no se puede deshacer.")) return;
+  datos.cuidador.splice(i,1);
+  guardar(); pintar(); avisar("Nota borrada.");
+});
+$("btnNotaCuidador").addEventListener("click",function(){
+  var t=$("notaCuidador").value.trim(); if(!t) return;
+  datos.cuidador.push({fecha:hoyISO(),texto:t});
+  guardar(); $("notaCuidador").value=""; pintar(); avisar("Nota añadida.");
+});
+
+/* Ajustes */
+function pintarAjustes(){
+  var p=datos.perfil||{}, o=datos.objetivos||{};
+  ["nombre","edad","altura","cardiologo","telefono","alergias","diagnostico","revision",
+   "metaActividad","tabaco","protocolo"].forEach(function(k){
+    var el=$("p"+k.charAt(0).toUpperCase()+k.slice(1));
+    if(el) el.value=p[k]||"";
+  });
+  $("oSisMin").value=o.sisMin||""; $("oSisMax").value=o.sisMax||"";
+  $("oDiaMin").value=o.diaMin||""; $("oDiaMax").value=o.diaMax||"";
+  $("oPulsoMin").value=o.pulsoMin||""; $("oPulsoMax").value=o.pulsoMax||"";
+  $("oGluMax").value=o.gluMax||""; $("oLdlMax").value=o.ldlMax||"";
+  $("versionApp").textContent="Re-Late Kardia v"+VERSION_APP+" · Datos guardados localmente en este dispositivo.";
+  $("versionLateral").textContent="v"+VERSION_APP;
+  $("selTema").value=temaElegido();
+  aplicarEscala();
+  aplicarSosFlotante();
+}
+$("formPerfil").addEventListener("submit",function(ev){
+  ev.preventDefault();
+  datos.perfil={
+    nombre:$("pNombre").value.trim(),edad:$("pEdad").value,altura:$("pAltura").value,
+    cardiologo:$("pCardiologo").value.trim(),telefono:$("pTelefono").value.trim(),
+    alergias:$("pAlergias").value.trim(),diagnostico:$("pDiagnostico").value.trim(),
+    revision:$("pRevision").value,metaActividad:n($("pMetaActividad").value),
+    tabaco:$("pTabaco").value,protocolo:$("pProtocolo").value.trim()
+  };
+  datos.objetivos={
+    sisMin:n($("oSisMin").value),sisMax:n($("oSisMax").value),
+    diaMin:n($("oDiaMin").value),diaMax:n($("oDiaMax").value),
+    pulsoMin:n($("oPulsoMin").value),pulsoMax:n($("oPulsoMax").value),
+    gluMax:n($("oGluMax").value),ldlMax:n($("oLdlMax").value)
+  };
+  guardar(); pintar(); avisar("Perfil y objetivos guardados.");
+});
+$("btnExportar").addEventListener("click",function(){
+  var b=new Blob([JSON.stringify(datos,null,2)],{type:"application/json"});
+  var a=document.createElement("a");
+  a.href=URL.createObjectURL(b); a.download="relate-kardia-"+hoyISO()+".json"; a.click();
+});
+$("archivoImportar").addEventListener("change",function(){
+  var f=this.files[0]; if(!f) return;
+  var fr=new FileReader();
+  fr.onerror=function(){ avisar("No se pudo leer el archivo."); };
+  fr.onload=function(){
+    try{
+      datos=normalizar(JSON.parse(fr.result));
+      guardar(); pintar(); avisar("Copia importada correctamente.");
+    }catch(e){ avisar("El archivo no es una copia válida de Re-Late Kardia."); }
+  };
+  fr.readAsText(f);
+  this.value="";
+});
+var promptInstalar=null;
+window.addEventListener("beforeinstallprompt",function(e){ e.preventDefault(); promptInstalar=e; });
+$("btnInstalar").addEventListener("click",function(){
+  if(promptInstalar){ promptInstalar.prompt(); promptInstalar=null; }
+  else avisar("Si ya está instalada, ábrela desde el icono de tu pantalla de inicio.");
+});
+
+/* Aviso inmediato al guardar una tensión alta */
+function avisoTensionAlta(r){
+  if(!r) return;
+  var s=Number(r.sistolica), d=Number(r.diastolica);
+  if(s>=180||d>=120){
+    avisar("⚠️ Tensión muy alta ("+s+"/"+d+"). Repósala y, si tienes síntomas, llama al 112.",9000);
+  } else if(s>=160||d>=100){
+    avisar("Tensión elevada ("+s+"/"+d+"). Repósala y coméntalo con tu equipo sanitario.",7000);
+  } else if(s>=140||d>=90){
+    avisar("Tensión algo alta ("+s+"/"+d+"). Anótala y vigílala en los próximos días.",6000);
+  }
+}
+
+/* Tamaño de letra */
+function escalaActual(){
+  var v=Number(localStorage.getItem("relate_escala"));
+  return ESCALAS.indexOf(v)>=0?v:100;
+}
+function aplicarEscala(){
+  var e=escalaActual();
+  document.documentElement.style.fontSize=e+"%";
+  var el=$("estadoLetra");
+  if(el) el.textContent = e===100 ? "Tamaño normal (100 %)." : "Tamaño aumentado al "+e+" %.";
+}
+function cambiarEscala(delta){
+  var i=ESCALAS.indexOf(escalaActual());
+  i=Math.max(0,Math.min(ESCALAS.length-1,i+delta));
+  localStorage.setItem("relate_escala",String(ESCALAS[i]));
+  aplicarEscala();
+  avisar("Tamaño de letra: "+ESCALAS[i]+" %.");
+}
+$("btnLetraMenos").addEventListener("click",function(){ cambiarEscala(-1); });
+$("btnLetraMas").addEventListener("click",function(){ cambiarEscala(1); });
+$("btnLetraNormal").addEventListener("click",function(){
+  localStorage.setItem("relate_escala","100"); aplicarEscala(); avisar("Tamaño de letra restablecido.");
+});
+
+/* Botón SOS flotante */
+function sosFlotanteActivo(){ return localStorage.getItem("relate_sos_flotante")==="si"; }
+function aplicarSosFlotante(){
+  var on=sosFlotanteActivo();
+  $("sosFlotante").hidden=!on;
+  var b=$("btnSosFlotante");
+  if(b){ b.textContent=on?"Activado":"Desactivado"; b.setAttribute("aria-pressed",on?"true":"false"); }
+}
+$("sosFlotante").addEventListener("click",function(){ irAVista("sos"); });
+$("btnSosFlotante").addEventListener("click",function(){
+  localStorage.setItem("relate_sos_flotante",sosFlotanteActivo()?"no":"si");
+  aplicarSosFlotante();
+  avisar(sosFlotanteActivo()?"Botón SOS flotante activado.":"Botón SOS flotante desactivado.");
+});
+
+/* Modo de color */
+$("selTema").addEventListener("change",function(){
+  localStorage.setItem("relate_tema",this.value);
+  aplicarTema(); pintarGrafica();
+});
+if(window.matchMedia){
+  var mqTema=window.matchMedia("(prefers-color-scheme: dark)");
+  var alCambiarTema=function(){ if(temaElegido()==="auto"){ aplicarTema(); pintarGrafica(); } };
+  if(mqTema.addEventListener) mqTema.addEventListener("change",alCambiarTema);
+  else if(mqTema.addListener) mqTema.addListener(alCambiarTema);
+}
+
+/* Informe para el médico */
+function mediaDe(lista,campo){
+  var v=lista.map(function(x){return Number(x[campo]);}).filter(function(x){return x>0;});
+  if(!v.length) return null;
+  return Math.round(v.reduce(function(a,b){return a+b;},0)/v.length);
+}
+function datosInforme(){
+  var hace30=new Date(); hace30.setDate(hace30.getDate()-29);
+  var iso30=isoDe(hace30);
+  var cons=datos.constantes.filter(function(c){return c.fecha>=iso30;});
+  var act=datos.actividad.filter(function(a){return a.fecha>=iso30;});
+  var dias=0, sumaAdh=0;
+  if(datos.medicacion.length){
+    for(var i=0;i<30;i++){
+      var f=new Date(); f.setDate(f.getDate()-i);
+      sumaAdh+=adherenciaDia(isoDe(f)); dias++;
+    }
+  }
+  return {
+    desde:iso30, hasta:hoyISO(), cons:cons, act:act,
+    adherencia:dias?Math.round(sumaAdh/dias):null,
+    minActividad:act.reduce(function(s,a){return s+(Number(a.minutos)||0);},0),
+    sesiones:act.length,
+    taSis:mediaDe(cons,"sistolica"), taDia:mediaDe(cons,"diastolica"),
+    pulso:mediaDe(cons,"pulso"), glucemia:mediaDe(cons,"glucemia"),
+    colTotal:mediaDe(cons,"colTotal"), colLDL:mediaDe(cons,"colLDL"),
+    peso:mediaDe(cons,"peso")
+  };
+}
+function construirInforme(){
+  var cont=$("informeImpresion"); if(!cont) return;
+  var p=datos.perfil||{}, d=datosInforme();
+  var filasCons=d.cons.slice().reverse().map(function(c){
+    return "<tr><td>"+esc(fecha(c.fecha))+"</td><td>"+esc(c.sistolica)+"/"+esc(c.diastolica)+"</td>"+
+      "<td>"+esc(c.pulso||"—")+"</td><td>"+esc(c.peso||"—")+"</td><td>"+esc(c.glucemia||"—")+"</td>"+
+      "<td>"+esc(c.colTotal||"—")+"</td><td>"+esc(c.colLDL||"—")+"</td><td>"+esc(c.notas||"")+"</td></tr>";
+  }).join("");
+  var med=datos.medicacion.map(function(m){
+    return "<tr><td>"+esc(m.nombre)+"</td><td>"+esc(m.dosis)+"</td><td>"+esc(m.horas.join(", "))+
+      "</td><td>"+esc(m.pauta)+"</td></tr>";
+  }).join("");
+  cont.innerHTML=
+    "<div class='inf-cab'><h1>Re-Late Kardia · Informe para consulta</h1>"+
+    "<p>Paciente: <strong>"+esc(p.nombre||"—")+"</strong> · Edad: "+esc(p.edad||"—")+
+    " · Periodo: "+fecha(d.desde)+" a "+fecha(d.hasta)+"</p>"+
+    "<p>Cardiólogo/a: "+esc(p.cardiologo||"—")+" · Diagnóstico: "+esc(p.diagnostico||"—")+
+    " · Alergias: "+esc(p.alergias||"—")+"</p></div>"+
+    "<div class='inf-bloque'><h2>Resumen del periodo</h2><ul>"+
+    "<li>Adherencia media a la medicación: <strong>"+(d.adherencia===null?"sin datos":d.adherencia+" %")+"</strong></li>"+
+    "<li>Actividad: <strong>"+d.minActividad+" minutos</strong> en "+d.sesiones+" sesiones</li>"+
+    "<li>Tensión media: <strong>"+(d.taSis?d.taSis+"/"+d.taDia+" mmHg":"sin datos")+"</strong></li>"+
+    "<li>Pulso medio: <strong>"+(d.pulso?d.pulso+" lpm":"sin datos")+"</strong></li>"+
+    "<li>Glucemia media: <strong>"+(d.glucemia?d.glucemia+" mg/dL":"sin datos")+"</strong></li>"+
+    "<li>Colesterol total / LDL medios: <strong>"+(d.colTotal||"—")+" / "+(d.colLDL||"—")+" mg/dL</strong></li>"+
+    "<li>Peso medio: <strong>"+(d.peso?d.peso+" kg":"sin datos")+"</strong></li>"+
+    "</ul></div>"+
+    "<div class='inf-bloque'><h2>Medicación actual</h2>"+
+    (med?"<table class='inf-tabla'><thead><tr><th>Medicamento</th><th>Dosis</th><th>Horas</th><th>Pauta</th></tr></thead><tbody>"+med+"</tbody></table>":"<p>Sin medicación registrada.</p>")+
+    "</div>"+
+    "<div class='inf-bloque'><h2>Constantes registradas ("+d.cons.length+")</h2>"+
+    (filasCons?"<table class='inf-tabla'><thead><tr><th>Fecha</th><th>TA</th><th>Pulso</th><th>Peso</th><th>Glucemia</th><th>Col. total</th><th>LDL</th><th>Notas</th></tr></thead><tbody>"+filasCons+"</tbody></table>":"<p>Sin registros en el periodo.</p>")+
+    "</div>"+
+    "<p style='font-size:.75rem;color:#555'>Documento generado por Re-Late Kardia el "+fecha(hoyISO())+". No sustituye el criterio médico.</p>";
+}
+function textoInforme(){
+  var p=datos.perfil||{}, d=datosInforme(), l=[];
+  l.push("INFORME RE-LATE KARDIA");
+  l.push("Paciente: "+(p.nombre||"—")+" · Periodo: "+fecha(d.desde)+" a "+fecha(d.hasta));
+  l.push("");
+  l.push("Adherencia media: "+(d.adherencia===null?"sin datos":d.adherencia+" %"));
+  l.push("Actividad: "+d.minActividad+" min en "+d.sesiones+" sesiones");
+  l.push("Tensión media: "+(d.taSis?d.taSis+"/"+d.taDia+" mmHg":"sin datos"));
+  l.push("Pulso medio: "+(d.pulso?d.pulso+" lpm":"sin datos"));
+  l.push("Glucemia media: "+(d.glucemia?d.glucemia+" mg/dL":"sin datos"));
+  l.push("Colesterol total/LDL: "+(d.colTotal||"—")+"/"+(d.colLDL||"—")+" mg/dL");
+  l.push("Peso medio: "+(d.peso?d.peso+" kg":"sin datos"));
+  l.push("");
+  l.push("Medicación:");
+  if(datos.medicacion.length){
+    datos.medicacion.forEach(function(m){ l.push("· "+m.nombre+" "+m.dosis+" ("+m.horas.join(", ")+")"); });
+  } else { l.push("· Sin medicación registrada"); }
+  l.push("");
+  l.push("Constantes del periodo: "+d.cons.length+" registros.");
+  l.push("");
+  l.push("Generado por Re-Late Kardia. No sustituye el criterio médico.");
+  return l.join("\n");
+}
+$("btnImprimirInforme").addEventListener("click",function(){
+  construirInforme();
+  window.print();
+});
+$("btnCompartirInforme").addEventListener("click",function(){
+  var texto=textoInforme();
+  if(navigator.share){
+    navigator.share({title:"Informe Re-Late Kardia",text:texto}).catch(function(){});
+    return;
+  }
+  var ta=document.createElement("textarea");
+  ta.value=texto; ta.style.position="fixed"; ta.style.top="0"; ta.style.left="0"; ta.style.opacity="0";
+  document.body.appendChild(ta); ta.focus(); ta.select();
+  var ok=false;
+  try{ ok=document.execCommand("copy"); }catch(e){ ok=false; }
+  document.body.removeChild(ta);
+  avisar(ok?"Informe copiado. Pégalo en tu correo o mensaje.":"No se pudo copiar automáticamente.",5000);
+});
+
+/* Avisos del navegador */
+function actualizarEstadoNotificaciones(){
+  var el=$("estadoNotificaciones"); if(!el) return;
+  if(!("Notification" in window)){ el.textContent="Tu navegador no permite avisos."; return; }
+  var p=Notification.permission;
+  el.textContent = p==="granted" ? "✅ Avisos activados."
+    : p==="denied" ? "⚠️ Has bloqueado los avisos. Actívalos en los ajustes del navegador."
+    : "Los avisos están desactivados.";
+}
+$("btnNotificaciones").addEventListener("click",function(){
+  if(!("Notification" in window)){ avisar("Tu navegador no permite avisos."); return; }
+  try{
+    var r=Notification.requestPermission(function(){ actualizarEstadoNotificaciones(); });
+    if(r&&r.then) r.then(function(){ actualizarEstadoNotificaciones(); });
+  }catch(e){ avisar("No se pudieron activar los avisos."); }
+});
+
+/* Bloqueo con PIN */
+function hashPin(p){
+  var h=0;
+  for(var i=0;i<p.length;i++){ h=((h<<5)-h)+p.charCodeAt(i); h|=0; }
+  return "k"+h;
+}
+function hayPin(){ return !!localStorage.getItem("relate_pin"); }
+function pintarPuntos(){
+  $("pinPuntos").innerHTML=[0,1,2,3].map(function(i){
+    return "<span class='pin-punto"+(i<pinBuffer.length?" lleno":"")+"'></span>";
+  }).join("");
+}
+function bloquearApp(){
+  if(!hayPin()) return;
+  pinBuffer="";
+  $("bloqueoTexto").textContent="Introduce tu PIN de 4 dígitos";
+  pintarPuntos();
+  $("bloqueo").hidden=false;
+  document.body.style.overflow="hidden";
+}
+function desbloquearApp(){
+  $("bloqueo").hidden=true;
+  document.body.style.overflow="";
+}
+function comprobarPin(){
+  if(hashPin(pinBuffer)===localStorage.getItem("relate_pin")){
+    desbloquearApp();
+  } else {
+    $("bloqueoTexto").textContent="PIN incorrecto. Inténtalo de nuevo.";
+    pinBuffer=""; pintarPuntos();
+  }
+}
+function construirTeclado(){
+  var t=$("pinTeclado");
+  var teclas=["1","2","3","4","5","6","7","8","9","borrar","0","ok"];
+  t.innerHTML=teclas.map(function(k){
+    var et=k==="borrar"?"⌫":(k==="ok"?"✓":k);
+    var lab=k==="borrar"?"Borrar último dígito":(k==="ok"?"Confirmar PIN":("Número "+k));
+    return "<button type='button' data-pin='"+k+"' aria-label='"+lab+"'>"+et+"</button>";
+  }).join("");
+  t.addEventListener("click",function(ev){
+    var b=ev.target.closest("[data-pin]"); if(!b) return;
+    var k=b.dataset.pin;
+    if(k==="borrar"){ pinBuffer=pinBuffer.slice(0,-1); pintarPuntos(); return; }
+    if(k==="ok"){ comprobarPin(); return; }
+    if(pinBuffer.length<4){ pinBuffer+=k; pintarPuntos(); }
+    if(pinBuffer.length===4) setTimeout(comprobarPin,150);
+  });
+}
+$("btnPin").addEventListener("click",function(){
+  if(hayPin()){
+    if(!confirm("¿Desactivar el bloqueo con PIN?")) return;
+    localStorage.removeItem("relate_pin");
+    $("btnBloquear").hidden=true;
+    $("btnPin").textContent="Activar bloqueo con PIN";
+    avisar("Bloqueo desactivado.");
+    return;
+  }
+  var p=prompt("Elige un PIN de 4 dígitos (solo números):");
+  if(p===null) return;
+  p=String(p).replace(/\D/g,"").slice(0,4);
+  if(p.length!==4){ avisar("El PIN debe tener 4 dígitos."); return; }
+  var p2=prompt("Repite el PIN para confirmarlo:");
+  if(p2===null) return;
+  if(String(p2).replace(/\D/g,"")!==p){ avisar("Los PIN no coinciden."); return; }
+  localStorage.setItem("relate_pin",hashPin(p));
+  $("btnBloquear").hidden=false;
+  $("btnPin").textContent="Desactivar bloqueo con PIN";
+  avisar("Bloqueo activado. Apúntalo bien: si lo olvidas tendrás que borrar los datos del navegador.");
+});
+$("btnBloquear").addEventListener("click",function(){ bloquearApp(); });
+
+/* Borrar todos los datos */
+$("btnBorrarTodo").addEventListener("click",function(){
+  if(!confirm("⚠️ Vas a borrar TODOS tus datos de Re-Late Kardia.\n\nEsta acción no se puede deshacer.\n\n¿Quieres continuar?")) return;
+  if(!confirm("Última confirmación: se borrarán medicación, constantes, actividad, ánimo, notas y perfil.\n\n¿Seguro que quieres borrarlo todo?")) return;
+  try{
+    localStorage.removeItem(CLAVE);
+    localStorage.removeItem("relate_tema");
+    localStorage.removeItem("relate_pin");
+    localStorage.removeItem("relate_escala");
+    localStorage.removeItem("relate_sos_flotante");
+    localStorage.removeItem("relate_kardia_v1");
+    localStorage.removeItem("relate_kardia_extra_v1");
+    localStorage.removeItem("relate_kardia_actividad_extra_v1");
+  }catch(e){}
+  datos=clonar(BASE);
+  cancelarEdicionMed(); cancelarEdicionConst();
+  $("btnBloquear").hidden=true;
+  $("btnPin").textContent="Activar bloqueo con PIN";
+  guardar(); pintar();
+  avisar("Todos tus datos han sido borrados.");
+});
+
+/* Eventos globales */
+document.addEventListener("click",function(ev){
+  var btn=ev.target.closest("[data-cambiar-banner]");
+  if(btn){ bannerEditando=btn.dataset.cambiarBanner; $("selectorFotoBanner").click(); return; }
+  var go=ev.target.closest("[data-ir]");
+  if(go){ irAVista(go.dataset.ir); return; }
+  var grupo=ev.target.closest("[data-grupo-plato]");
+  if(grupo){
+    grupoPlatoActual=grupo.dataset.grupoPlato;
+    document.querySelectorAll(".leyenda-item").forEach(function(x){
+      var activo=x.dataset.grupoPlato===grupoPlatoActual;
+      x.classList.toggle("activo",activo);
+      x.setAttribute("aria-pressed",activo?"true":"false");
+    });
+    pintarNutricion();
+  }
+});
+$("tablaConst").addEventListener("click",function(ev){
+  var b=ev.target.closest("[data-borrar-const]");
+  if(b){
+    var i=Number(b.dataset.borrarConst), c=datos.constantes[i];
+    if(!c) return;
+    if(!confirm("¿Borrar el registro del "+fecha(c.fecha)+" ("+c.sistolica+"/"+c.diastolica+")?\n\nEsta acción no se puede deshacer.")) return;
+    datos.constantes.splice(i,1);
+    if(constEditando===i) cancelarEdicionConst();
+    else if(constEditando>i) constEditando--;
+    guardar(); pintar(); avisar("Registro borrado.");
+    return;
+  }
+  var e=ev.target.closest("[data-editar-const]");
+  if(e) editarConstante(Number(e.dataset.editarConst));
+});
+$("selectorFotoBanner").addEventListener("change",function(){
+  var f=this.files[0];
+  if(!f||!bannerEditando) return;
+  comprimirImagen(f,900,0.72,function(dataUrl){
+    if(!dataUrl){ avisar("No se pudo procesar la imagen."); return; }
+    datos.banners=datos.banners||{};
+    datos.banners[bannerEditando]=dataUrl;
+    guardar(); aplicarBanners(); avisar("Imagen actualizada.");
+  });
+  this.value="";
+});
+$("btnRestaurarBanners").addEventListener("click",function(){
+  datos.banners={}; guardar(); aplicarBanners(); avisar("Ilustraciones restauradas.");
+});
+$("segmentoMetrica").addEventListener("click",function(ev){
+  var b=ev.target.closest("button"); if(!b) return;
+  Array.prototype.forEach.call(this.children,function(x){
+    x.classList.remove("activo"); x.setAttribute("aria-pressed","false");
+  });
+  b.classList.add("activo"); b.setAttribute("aria-pressed","true");
+  metricaActual=b.dataset.metrica; pintarGrafica();
+});
+$("buscadorAlimento").addEventListener("input",pintarNutricion);
+$("btnMas").addEventListener("click",abrirHoja);
+$("btnCerrarHoja").addEventListener("click",cerrarHoja);
+$("hojaFondo").addEventListener("click",cerrarHoja);
+document.addEventListener("keydown",function(e){
+  if(e.key==="Escape"&&!$("hojaMas").hidden) cerrarHoja();
+});
+document.querySelectorAll('[data-accion="tema"]').forEach(function(b){
+  b.addEventListener("click",function(){
+    localStorage.setItem("relate_tema",temaEfectivo()==="noche"?"dia":"noche");
+    aplicarTema(); pintarGrafica();
+  });
+});
+document.querySelectorAll('[data-accion="informe"]').forEach(function(b){
+  b.addEventListener("click",function(){ construirInforme(); window.print(); });
+});
+window.addEventListener("resize",function(){
+  clearTimeout(tResize);
+  tResize=setTimeout(pintarGrafica,150);
+});
+/* Franja de imagen al inicio de cada sección */
+(function(){
+  var secciones=["medicacion","constantes","actividad","nutricion","emociones","guia"];
+  secciones.forEach(function(id){
+    var sec=$("vista-"+id);
+    if(!sec) return;
+    var div=document.createElement("div");
+    div.className="banner-vista";
+    div.dataset.banner=id;
+    var b=document.createElement("button");
+    b.type="button"; b.className="btn-cambiar-banner";
+    b.dataset.cambiarBanner=id;
+    b.textContent="📷 Cambiar imagen";
+    b.setAttribute("aria-label","Cambiar la imagen de la sección "+id);
+    div.appendChild(b);
+    sec.insertBefore(div,sec.firstChild);
+  });
+})();
+
+/* Arranque */
+function pintar(){
+  aplicarBanners();
+  pintarInicio(); pintarMedicacion(); pintarConstantes(); pintarActividad();
+  pintarNutricion(); pintarEmociones(); pintarSos(); pintarCuidador(); pintarAjustes();
+  pintarAdherencia(); actualizarEstadoNotificaciones(); construirInforme();
+}
+construirNavegacion();
+construirTeclado();
+aplicarTema();
+aplicarEscala();
+aplicarSosFlotante();
+pintar();
+irAVista("inicio");
+if(hayPin()){
+  $("btnBloquear").hidden=false;
+  $("btnPin").textContent="Desactivar bloqueo con PIN";
+  bloquearApp();
+}
+comprobarRecordatorios();
+setInterval(comprobarRecordatorios,30000);
+
+if ("serviceWorker" in navigator) {
+  window.addEventListener("load", function () {
+    navigator.serviceWorker
+      .register("./sw.js", { updateViaCache: "none" })
+      .catch(function (error) {
+        console.warn("No se pudo registrar el service worker:", error);
+      });
+  });
+}
+
+})();
+</script>
+<script>
+(() => {
+  const btn = document.getElementById('installBtn');
+  let dp = null;
+
+  if ('serviceWorker' in navigator && location.protocol.startsWith('http')) {
+    addEventListener('load', () =>
+      navigator.serviceWorker.register('./sw.js').catch(err => console.warn('SW no registrado:', err))
+    );
+  }
+
+  addEventListener('beforeinstallprompt', e => {
+    e.preventDefault();
+    dp = e;
+    if (btn) btn.classList.add('show');
+  });
+
+  if (btn) btn.addEventListener('click', async () => {
+    if (dp) {
+      dp.prompt();
+      const { outcome } = await dp.userChoice;
+      if (outcome === 'accepted') btn.classList.remove('show');
+      dp = null;
+    } else {
+      alert('Para instalar: menú ⋮ del navegador → «Instalar aplicación» (Android) o Compartir → «Añadir a pantalla de inicio» (iPhone/iPad).');
+    }
+  });
+
+  addEventListener('appinstalled', () => btn && btn.classList.remove('show'));
+})();
+</script>
+<!-- ============ KIT INSTALACIÓN Re-Late KARDIA ============ -->
+<style>
+.btn-instalar{display:none;align-items:center;gap:.4rem;background:linear-gradient(135deg,var(--brand),var(--brand-2));
+  color:#fff;border:0;border-radius:999px;padding:.55rem .95rem;font-size:.85rem;font-weight:800;cursor:pointer;
+  box-shadow:0 4px 12px rgba(13,110,99,.28);min-height:44px;transition:all var(--trans)}
+.btn-instalar.visible{display:inline-flex}
+.btn-instalar:hover{transform:translateY(-1px)}
+.inst-fondo{position:fixed;inset:0;background:rgba(10,18,22,.55);z-index:300;display:none}
+.inst-fondo.visible{display:block}
+.inst-caja{position:fixed;left:0;right:0;bottom:0;z-index:301;background:var(--surface);border-radius:24px 24px 0 0;
+  padding:1.2rem;box-shadow:var(--s2);max-width:560px;margin:0 auto;display:none;
+  max-height:86vh;overflow-y:auto}
+.inst-caja.visible{display:block;animation:subir .26s cubic-bezier(.2,.8,.3,1)}
+@media(min-width:1000px){.inst-caja{left:50%;right:auto;bottom:auto;top:50%;transform:translate(-50%,-50%);
+  border-radius:24px;width:min(480px,92vw)}}
+.inst-cab{display:flex;justify-content:space-between;align-items:center;gap:1rem;margin-bottom:.8rem}
+.inst-cab h2{font-size:1.1rem}
+.inst-cerrar{background:var(--surface-2);border:1px solid var(--line);border-radius:50%;width:40px;height:40px;
+  font-size:1.1rem;cursor:pointer;color:var(--ink);min-height:auto}
+.inst-op{display:flex;gap:.8rem;align-items:flex-start;background:var(--surface-2);border:1px solid var(--line);
+  border-radius:16px;padding:.9rem;margin-bottom:.6rem}
+.inst-op .ico{font-size:1.5rem;flex:0 0 auto}
+.inst-op b{display:block;font-size:.92rem;margin-bottom:.15rem}
+.inst-op p{font-size:.82rem;color:var(--ink-2);line-height:1.45}
+.k-toast{position:fixed;left:50%;bottom:calc(96px + env(safe-area-inset-bottom));transform:translate(-50%,1rem);
+  z-index:400;background:var(--ink);color:var(--bg);padding:.8rem 1.15rem;border-radius:14px;font-weight:600;
+  font-size:.9rem;box-shadow:var(--s2);opacity:0;pointer-events:none;transition:opacity .2s,transform .2s;
+  max-width:min(90vw,32rem);text-align:center}
+.k-toast.visible{opacity:1;transform:translate(-50%,0)}
+@media(min-width:1000px){.k-toast{bottom:1.4rem}}
+</style>
+
+<div class="inst-fondo" id="instFondo"></div>
+<div class="inst-caja" id="instCaja" role="dialog" aria-modal="true" aria-labelledby="instTitulo">
+  <div class="inst-cab">
+    <h2 id="instTitulo">📲 Instalar Re-Late Kardia</h2>
+    <button type="button" class="inst-cerrar" id="instCerrar" aria-label="Cerrar">✕</button>
+  </div>
+  <div class="inst-op">
+    <span class="ico">🤖</span>
+    <div><b>Android (Chrome)</b>
+    <p>Menú <b>⋮</b> → <b>«Instalar aplicación»</b>. Quedará con su icono en tu pantalla y funcionará sin conexión.</p></div>
+  </div>
+  <div class="inst-op">
+    <span class="ico">🍎</span>
+    <div><b>iPhone / iPad (Safari)</b>
+    <p>Pulsa <b>Compartir</b> (cuadrado con flecha ↑) → <b>«Añadir a pantalla de inicio»</b> → <b>Añadir</b>.</p></div>
+  </div>
+  <div class="inst-op">
+    <span class="ico">💻</span>
+    <div><b>Ordenador</b>
+    <p>En Chrome o Edge, pulsa el icono <b>⊕ Instalar</b> a la derecha de la barra de direcciones.</p></div>
+  </div>
+  <p style="font-size:.78rem;color:var(--ink-3);margin-top:.4rem">🔒 Tus datos se guardan solo en este dispositivo.</p>
+</div>
+
+<script>
+(function(){
+  'use strict';
+  var btn, dp = null;
+  var esIOS = /iphone|ipad|ipod/i.test(navigator.userAgent) ||
+              (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+  var yaInstalada = window.matchMedia('(display-mode: standalone)').matches || navigator.standalone === true;
+
+  /* 1) Service worker */
+  if ('serviceWorker' in navigator && location.protocol.indexOf('http') === 0) {
+    window.addEventListener('load', function(){
+      navigator.serviceWorker.register('./sw.js')
+        .catch(function(e){ console.warn('Service worker no registrado:', e); });
+    });
+  }
+
+  /* 2) Botón «Instalar» insertado en la cabecera */
+  var acciones = document.querySelector('.topbar-acciones');
+  if (acciones) {
+    btn = document.createElement('button');
+    btn.type = 'button';
+    btn.className = 'btn-instalar';
+    btn.textContent = '⬇️ Instalar';
+    acciones.insertBefore(btn, acciones.firstChild);
+  }
+  if (yaInstalada && btn) btn.style.display = 'none';
+
+  /* 3) Guía manual */
+  var fondo = document.getElementById('instFondo');
+  var caja  = document.getElementById('instCaja');
+  function abrirGuia(){ fondo.classList.add('visible'); caja.classList.add('visible'); }
+  function cerrarGuia(){ fondo.classList.remove('visible'); caja.classList.remove('visible'); }
+  fondo.onclick = cerrarGuia;
+  document.getElementById('instCerrar').onclick = cerrarGuia;
+  document.addEventListener('keydown', function(e){ if (e.key === 'Escape') cerrarGuia(); });
+
+  function avisar(msg){
+    var t = document.createElement('div');
+    t.className = 'k-toast visible'; t.textContent = msg; t.setAttribute('role','status');
+    document.body.appendChild(t);
+    setTimeout(function(){ t.classList.remove('visible'); setTimeout(function(){ t.remove(); }, 300); }, 3500);
+  }
+
+  /* 4) Prompt nativo */
+  window.addEventListener('beforeinstallprompt', function(e){
+    e.preventDefault();
+    dp = e;
+    if (btn) btn.classList.add('visible');
+  });
+  window.addEventListener('appinstalled', function(){
+    dp = null;
+    if (btn) btn.classList.remove('visible');
+    avisar('✅ Re-Late Kardia instalada. ¡Ya puedes usarla sin conexión!');
+  });
+
+  if (btn) {
+    btn.addEventListener('click', function(){
+      if (dp) {
+        dp.prompt();
+        dp.userChoice.then(function(r){ if (r.outcome === 'accepted') btn.classList.remove('visible'); dp = null; });
+      } else {
+        abrirGuia();
+      }
+    });
+  }
+
+  /* 5) Si a los 6 s no hay prompt nativo (iOS, Firefox…), mostrar el botón con la guía */
+  setTimeout(function(){
+    if (btn && !yaInstalada && !dp) {
+      btn.textContent = '📲 Instalar app';
+      btn.classList.add('visible');
+    }
+  }, 6000);
+})();
+</script>
+<!-- ============ FIN KIT INSTALACIÓN ============ -->
+
+</body>
+</html>
